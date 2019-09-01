@@ -1,0 +1,38 @@
+Enunciado:
+En plena conquista espacial, la compañía SpaceW espera instalar la primera base lunar. Para esto ha enviado un Lunar-Rover que analizará el terreno con el fin de  encontrar el mejor lugar para la construcción de la estructura.
+
+Nuestro equipo está a cargo del desarrollo de la funcionalidad que se encarga de manejar el brazo excavador para análisis del suelo lunar. El mismo está provisto por una mecha que puede girar en ambos sentidos y a diferentes velocidades. Los especialistas en terreno lunar nos cuentan que en principio se esperan encontrar con dos tipos de suelo:
+
+1. Un suelo formado puramente por piedra que se caracteriza por ser duro y compacto.
+2. El otro, un suelo formado por polvo (debido al impacto de meteoritos), que se caracteriza por ser blando y muy poroso.
+
+	Según sea el caso, el brazo excavador deberá funcionar de manera diferente: en el primer caso, deberemos hacer girar la mecha en el sentido de las agujas del reloj, a una velocidad de 150 rpm durante 10 minutos. Luego deberemos accionar el cierre de la pinza del brazo para tomar la muestra; y por último (para extraer la muestra de suelo), haremos girar la mecha en el sentido contrario y a la misma velocidad. En el segundo caso, la mecha debe girar en el sentido contrario a las agujas del reloj, a una velocidad de 100 rpm durante 5 minutos. Luego debemos accionar el cierre de las pinzas y por último, la mecha debe girar en el sentido contrario y a la misma velocidad.
+Nos cuentan que para saber el tipo de suelo podremos acceder a dos valores: la dureza del suelo y la porosidad del mismo (nuestro equipo también debe decidir cómo modelar estos valores).
+
+Pregunta 1:
+Implemente la solución en el lenguaje que le resulte más cómodo. Y suba a una carpeta ToTheMoon-00 en su repositorio de la materia. A continuación explique la idea de su solución (incluya fragmentos del código fuente que le resulten importantes)
+
+Respuesta:
+Representamos los distintos estados de la mecha a traves de prints por consola.  El ejercicio fue realizado en Python. Cuenta con una accion llamada 'manejarBrazoEscavador' que toma como parametros la informacion sobre el suelo, es decir: si el suelo es duro y/o es poroso.
+Estas variantes las identificamos como verdaderas o falsas, ya que en esta instancia del ejercicio no contamos con matices para la dureza y porosidad.
+Luego, segun el suelo se realizan las acciones correspondientes de la mecha. Interpretamos a la funcion 'usarMecha' como una perilla con timer (es decir un panel de control de la misma).
+Notamos que las perforaciones siempre cuentan con el ingreso y posterior egreso de la mecha. Ademas el sentido de giro al extraer la mecha es el inverso al sentido de ingreso, para eso contamos con 'sentidoOpuesto' y la velocidad y duracion se mantienen,. Esta generalizacion mencionada se llama 'perforacionCompleta' y recibe el sentido de ingreso, la velocidad y la duracion de la perforacion.
+def perforacionCompleta(sentido, rpm, duracion):
+    usarMecha(sentido, rpm, duracion)
+    print("Cerrando pinzas")
+    usarMecha(sentidoOpuesto(sentido), rpm, duracion)
+    print("Recoleccion terminada. \n")
+
+Pregunta 2:
+Los expertos nos mencionan que hay una gran probabilidad de que exista un tercer tipo de suelo (con dureza y porosidad intermedias) En ese caso, para excavar, el brazo deberá girar en el sentido de la agujas del reloj a 150 rpm durante 5 minutos y para extraer la muestra debe girar en el sentido contrario de las agujas del reloj, a una velocidad de 100 rpm durante 10 minutos.
+
+Respuesta:
+En este caso se deja de interpretar la dureza y porosidad como medidas digitales, ya que se habla de 'intermedias'. Suponemos que estas constantes observadas son medidas del 0 al 1, siendo el 1 la medicion 'mas dura' o 'mas porosa' y 0 siendo lo opuesto. De esta forma el intervalo [0, 1] lo dividimos en 'tercios' para definir [0.33, 0.66] como las medidas intermedias.
+Ademas se agrega una version donde la extraccion no es a la misma velocidad ni duracion que el ingreso de la mecha. Para esto modificamos 'perforacionCompleta':
+def perforacionCompleta(sentidoEntrada, rpmEntrada, duracionEntrada, rpmExtraccion, duracionExtraccion):
+    usarMecha(sentidoEntrada, rpmEntrada, duracionEntrada)
+    print("Cerrando pinzas")
+    usarMecha(sentidoOpuesto(sentidoEntrada), rpmExtraccion, duracionExtraccion)
+    print("Recoleccion terminada. \n")
+
+agregando estos nuevos parametros.
