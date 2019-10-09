@@ -291,7 +291,7 @@ testMovesOneWestNotRotating
 	self assert: rover orientation equals: East! !
 
 
-!MarsRoverTest methodsFor: 'Wrong command sequence' stamp: 'VPM 10/9/2019 14:40:20'!
+!MarsRoverTest methodsFor: 'Wrong command sequence' stamp: 'VPM 10/9/2019 15:45:30'!
 testMovesStraightUntilUnknownCommand
 
 	| commands rover |
@@ -300,7 +300,9 @@ testMovesStraightUntilUnknownCommand
 	
 	commands := 'ffffaaaaafff'.
 	"esto deberia estar bien hecho jejje"
-	self should: [ rover do: commands ] raise: Error.
+	self should: [ rover do: commands ] 
+		raise: Error
+		withMessageText: Command unknownCommandErrorMessage .
 	
 	self assert: rover at equals: 4@0.
 	self assert: rover orientation equals: South! !
@@ -611,10 +613,14 @@ Command class
 executeOn: aMarsRover
 	self subclassResponsibility ! !
 
-!Command class methodsFor: 'as yet unclassified' stamp: 'VPM 10/9/2019 14:36:44'!
+!Command class methodsFor: 'as yet unclassified' stamp: 'VPM 10/9/2019 15:44:17'!
 forChar: aCommandChar
 	^ self subclasses detect: [ :aTypeOfCommand | aTypeOfCommand toChar = aCommandChar ] 
-						ifNone: [ self error: 'Unknown Command' ]! !
+						ifNone: [ self error: self unknownCommandErrorMessage ]! !
+
+!Command class methodsFor: 'as yet unclassified' stamp: 'VPM 10/9/2019 15:44:35'!
+unknownCommandErrorMessage
+	^ 'Unknown Command'! !
 
 
 !classDefinition: #Backward category: #MarsRover!
