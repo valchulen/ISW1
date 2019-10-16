@@ -301,7 +301,7 @@ test22XCantMoveFromAPositionHeDoesntOccupy
 		withMessageText: TerniLapilli cantMoveFromAnUnoccupiedSpace.
 ! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:34:33'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:01:57'!
 test23XCantMoveToAnOccupiedPosition
 	| game |
 	
@@ -315,7 +315,7 @@ test23XCantMoveToAnOccupiedPosition
 	
 	self should: [ game moveXfrom: 5 to: 8 ] 
 		raise: Error
-		withMessageText: TerniLapilli cantPlayInAnOccupiedSlot.! !
+		withMessageText: TerniLapilli cantMoveToOccuppiedPlace.! !
 
 !TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:40:27'!
 test24XCantMoveBeforeThirdRound
@@ -368,7 +368,7 @@ test26OCanMoveAndWins
 	self deny: game isXTheWinner.
 	self assert: game isOTheWinner.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:44:30'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:04:12'!
 test27OCantMoveFromAPositionHeDoesntOccupy
 	| game |
 	
@@ -382,11 +382,11 @@ test27OCantMoveFromAPositionHeDoesntOccupy
 	
 	game moveXfrom: 5 to: 3.
 	
-	self should: [ game moveOfrom: 9 to: 8 ] 
+	self should: [ game moveOfrom: 9 to: 5 ] 
 		raise: Error
 		withMessageText: TerniLapilli cantMoveFromAnUnoccupiedSpace.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:53:15'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:04:59'!
 test28OCantMoveToAnOccupiedPosition
 	| game |
 	
@@ -402,7 +402,7 @@ test28OCantMoveToAnOccupiedPosition
 	
 	self should: [ game moveOfrom: 2 to: 1 ] 
 		raise: Error
-		withMessageText: TerniLapilli cantPlayInAnOccupiedSlot.! !
+		withMessageText: TerniLapilli cantMoveToOccuppiedPlace .! !
 
 !TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:49:09'!
 test29XCantMoveBeforeThirdRound
@@ -417,7 +417,7 @@ test29XCantMoveBeforeThirdRound
 		raise: Error
 		withMessageText: TerniLapilli cantMoveBeforeThirdRound.! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:56:17'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:37:58'!
 test30XCantMoveToTheSamePlace
 	| game |
 	
@@ -431,9 +431,9 @@ test30XCantMoveToTheSamePlace
 	
 	self should: [ game moveXfrom: 5 to: 5 ] 
 		raise: Error
-		withMessageText: TerniLapilli cantMoveToTheSamePlace.! !
+		withMessageText: TerniLapilli cantMoveToOccuppiedPlace .! !
 
-!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:59:47'!
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:38:15'!
 test31OCantMoveToTheSamePlace
 	| game |
 	
@@ -449,7 +449,7 @@ test31OCantMoveToTheSamePlace
 	
 	self should: [ game moveOfrom: 2 to: 2 ] 
 		raise: Error
-		withMessageText: TerniLapilli cantMoveToTheSamePlace.! !
+		withMessageText: TerniLapilli cantMoveToOccuppiedPlace .! !
 
 !TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 20:10:18'!
 test32OCantPlayAFourthTime
@@ -545,132 +545,238 @@ test35OCantMoveOutOfTurn
 		withMessageText: TerniLapilli isNotOTurn.
 	! !
 
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:45:59'!
+test36XCantMoveOutOfBounds
+
+	| game |
+	
+	game := TerniLapilli new.
+	game playXat: 1.
+	game playOat: 2.
+	game playXat: 5.
+	game playOat: 4.
+	game playXat: 7.
+	game playOat: 9.	
+
+	self should: [ game moveXfrom: 1 to: 10 ]
+		raise: Error
+		withMessageText: TerniLapilli cantPlayOutOfBounds.
+	! !
+
+!TerniLapilliTest methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:46:20'!
+test37XCantMoveFromOutOfBounds
+
+	| game |
+	
+	game := TerniLapilli new.
+	game playXat: 1.
+	game playOat: 2.
+	game playXat: 5.
+	game playOat: 4.
+	game playXat: 7.
+	game playOat: 9.	
+
+	self should: [ game moveXfrom: 10 to: 1 ]
+		raise: Error
+		withMessageText: TerniLapilli cantPlayOutOfBounds.
+	! !
+
 
-!classDefinition: #TerniLapilli category: #'Terni-Lapilli'!
-Object subclass: #TerniLapilli
-	instanceVariableNames: 'XTurn OTurn Xs Os gameFinished'
+!classDefinition: #State category: #'Terni-Lapilli'!
+Object subclass: #State
+	instanceVariableNames: 'ocuppiedPlaces'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Terni-Lapilli'!
 
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 16:45:41'!
+!State methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:05:42'!
+hasWon
+	| aMagicSquare total |
+	
+	aMagicSquare := TerniLapilli magicSquare.
+	total := 0.
+	ocuppiedPlaces do: [ :elem | total := total + (aMagicSquare at: elem)].
+	^15 = total.! !
+
+!State methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:53:15'!
 initialize
+	ocuppiedPlaces := Set new! !
+
+!State methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:47:38'!
+isOTurn
+	self subclassResponsibility ! !
+
+!State methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:58:07'!
+isPositionOccupied: aPosition
+	^ ocuppiedPlaces includes: aPosition! !
+
+!State methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:36:42'!
+isValidMoveFrom: initialPosition to: finalPosition
+	| x0 x1 y0 y1 d |
+	x0 := (initialPosition - 1) \\ 3.
+	y0 := (initialPosition - 1) // 3.
+	x1 := (finalPosition - 1) \\ 3.
+	y1 := (finalPosition - 1) // 3.
+	
+	d := ((x0@y0) - (x1@y1)) abs.
+	
+	^ (d x <= 1) & (d y <= 1)! !
+
+!State methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:47:42'!
+isXTurn
+	self subclassResponsibility ! !
+
+!State methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:46:58'!
+moveFrom: startingPosition to: endPosition
+
+	(1 <= endPosition) & (endPosition <= 9) ifFalse: [ self error: TerniLapilli cantPlayOutOfBounds ].
+
+	(self isValidMoveFrom: startingPosition to: endPosition) ifFalse: [ self error: TerniLapilli cantMakeAnInvalidMove ].
+
+	ocuppiedPlaces size < 3 ifTrue: [ self error: TerniLapilli cantMoveBeforeThirdRound ].
+	ocuppiedPlaces remove: startingPosition ifAbsent: [ self error: TerniLapilli cantMoveFromAnUnoccupiedSpace ].
+	ocuppiedPlaces add: endPosition.! !
+
+!State methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:43:15'!
+playAt: aPosition
+	(1 <= aPosition) & (aPosition <= 9) ifFalse: [ self error: TerniLapilli cantPlayOutOfBounds ].
+	ocuppiedPlaces size = 3 ifTrue: [ self error: TerniLapilli cantPlayMoreThanThreeTimes ].
+	ocuppiedPlaces add: aPosition! !
+
+
+!classDefinition: #OState category: #'Terni-Lapilli'!
+State subclass: #OState
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Terni-Lapilli'!
+
+!OState methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:46:54'!
+isOTurn
+	^ true! !
+
+!OState methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:47:01'!
+isXTurn
+	^ false! !
+
+
+!classDefinition: #XState category: #'Terni-Lapilli'!
+State subclass: #XState
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Terni-Lapilli'!
+
+!XState methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:47:09'!
+isOTurn
+	^ false! !
+
+!XState methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:47:14'!
+isXTurn
+	^ true! !
+
+
+!classDefinition: #TerniLapilli category: #'Terni-Lapilli'!
+Object subclass: #TerniLapilli
+	instanceVariableNames: 'XTurn OTurn Xs Os gameFinished OS XS nextPlayer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Terni-Lapilli'!
+
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:29:56'!
+initialize
+	XS := XState new.
+	OS := OState new.
+ 	nextPlayer := XS.
+	
 	XTurn := true.
 	OTurn := false.
 	Xs := Set new.
 	Os := Set new.
 	gameFinished := false.! !
 
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 16:38:41'!
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:32:19'!
 isAnOPieceAt: aPosition
-	^Os includes: aPosition.! !
+	^ OS isPositionOccupied: aPosition! !
 
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gl 10/10/2019 18:49:11'!
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:57:03'!
 isAnXPieceAt: aPosition
-	^Xs includes: aPosition.! !
+	^ XS isPositionOccupied: aPosition ! !
 
 !TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:07:18'!
 isGameFinished
 	^ (self isXTheWinner) | (self isOTheWinner).! !
 
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:16:27'!
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:32:55'!
 isOTheWinner
-	| aMagicSquare total |
-	
-	aMagicSquare := TerniLapilli magicSquare.
-	total := 0.
-	Os do: [:elem | total := total + (aMagicSquare at: elem)].
-	^15 = total.! !
+	^ OS hasWon! !
 
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gl 10/10/2019 18:37:02'!
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:48:05'!
 isOTurn
-	^ OTurn.! !
+	^ nextPlayer isOTurn! !
 
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 17:00:54'!
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:57:40'!
 isPositionOccupied: aPosition
-	^(self isAnXPieceAt: aPosition) | (self isAnOPieceAt: aPosition).
+	^ (self isAnXPieceAt: aPosition) | (self isAnOPieceAt: aPosition)
 ! !
 
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:16:11'!
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:32:45'!
 isXTheWinner
-	| aMagicSquare total |
-	
-	aMagicSquare := TerniLapilli magicSquare.
-	total := 0.
-	Xs do: [:elem | total := total + (aMagicSquare at: elem)].
-	^15 = total.! !
+	^ XS hasWon! !
 
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gl 10/10/2019 18:37:19'!
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:47:55'!
 isXTurn
-	^ XTurn.! !
+	^ nextPlayer isXTurn! !
 
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 20:06:22'!
-moveOfrom: initialPostition to: finalPosition
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:38:38'!
+moveOfrom: initialPosition to: finalPosition
 
-	initialPostition = finalPosition ifTrue: [self error: TerniLapilli cantMoveToTheSamePlace].
-	Os size < 3 ifFalse: [
-	Os remove: initialPostition ifAbsent: [self error: TerniLapilli cantMoveFromAnUnoccupiedSpace].
-	self playOat: finalPosition.
-	] ifTrue: [
-		self error: TerniLapilli cantMoveBeforeThirdRound.
-	]
-! !
-
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 20:15:14'!
-moveXfrom: initialPostition to: finalPosition
+	self isOTurn ifFalse: [ self error: TerniLapilli isNotOTurn ].
 	
-	initialPostition = finalPosition ifTrue: [self error: TerniLapilli cantMoveToTheSamePlace].	
-	Xs size < 3 ifFalse: [
-	Xs remove: initialPostition ifAbsent: [self error: TerniLapilli cantMoveFromAnUnoccupiedSpace].
-	self playXat: finalPosition.
-	] ifTrue: [
-		self error: TerniLapilli cantMoveBeforeThirdRound.
-	]
+	(self isPositionOccupied: finalPosition) ifTrue: [ self error: TerniLapilli cantMoveToOccuppiedPlace ].
+	
+	OS moveFrom: initialPosition to: finalPosition.
+	
+	nextPlayer := XS! !
+
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:38:42'!
+moveXfrom: initialPosition to: finalPosition
+
+	self isXTurn ifFalse: [ self error: TerniLapilli isNotXTurn ].
+	
+	(self isPositionOccupied: finalPosition) ifTrue: [ self error: TerniLapilli cantMoveToOccuppiedPlace ].
+	
+	XS moveFrom: initialPosition to: finalPosition.
+	
+	nextPlayer := OS
 ! !
 
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 20:07:51'!
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:55:52'!
 playOat: aPosition
-	self isOTurn ifTrue: [
-		 (self isPositionOccupied: aPosition ) not ifTrue: [
-			Os size = 3 ifFalse: [
-			Os add: aPosition.
-			OTurn := false.
-			XTurn := true.
-			] ifTrue: [
-				self error: TerniLapilli cantPlayMoreThanThreeTimes.
-			]
-		] ifFalse: [
-			self error: TerniLapilli cantPlayInAnOccupiedSlot.
-		].
-	] ifFalse: [
-		self error: TerniLapilli isNotOTurn.
-	].
+
+	self isOTurn ifFalse: [ self error: TerniLapilli isNotOTurn ].
+	(self isPositionOccupied: aPosition) ifTrue: [ self error: TerniLapilli cantPlayInAnOccupiedSlot ].
+	OS playAt: aPosition.
+	nextPlayer := XS
 ! !
 
-!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:30:59'!
+!TerniLapilli methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:56:00'!
 playXat: aPosition
-	self isXTurn ifTrue: [
-		 (self isPositionOccupied: aPosition ) not ifTrue: [
-			Xs size = 3 ifFalse: [
-			Xs add: aPosition.
-			XTurn := false.
-			OTurn := true.
-			] ifTrue: [
-				self error: TerniLapilli cantPlayMoreThanThreeTimes.
-			]
-		] ifFalse: [
-			self error: TerniLapilli cantPlayInAnOccupiedSlot.
-		].
-	] ifFalse: [
-		self error: TerniLapilli isNotXTurn.
-	].
-! !
+
+	self isXTurn ifFalse: [ self error: TerniLapilli isNotXTurn ].
+	(self isPositionOccupied: aPosition) ifTrue: [ self error: TerniLapilli cantPlayInAnOccupiedSlot ].
+	XS playAt: aPosition.
+	nextPlayer := OS! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'TerniLapilli class' category: #'Terni-Lapilli'!
 TerniLapilli class
 	instanceVariableNames: ''!
+
+!TerniLapilli class methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 11:53:39'!
+cantMakeAnInvalidMove
+	^ 'cant make a move more than one place away'! !
 
 !TerniLapilli class methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:41:01'!
 cantMoveBeforeThirdRound
@@ -680,9 +786,9 @@ cantMoveBeforeThirdRound
 cantMoveFromAnUnoccupiedSpace
 	^'Cant move from a space you dont occupy'! !
 
-!TerniLapilli class methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:56:56'!
-cantMoveToTheSamePlace
-	^'cant move to the same place'! !
+!TerniLapilli class methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:45:43'!
+cantMoveToOccuppiedPlace
+	^ 'cant move to an already Occupied place'! !
 
 !TerniLapilli class methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 16:57:34'!
 cantPlayInAnOccupiedSlot
@@ -692,6 +798,10 @@ cantPlayInAnOccupiedSlot
 cantPlayMoreThanThreeTimes
 	^'Cant play more than three times'.! !
 
+!TerniLapilli class methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 13:41:12'!
+cantPlayOutOfBounds
+	^ 'cannot play out of board bounds'! !
+
 !TerniLapilli class methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 16:39:10'!
 isNotOTurn
 	^ 'Is not Os turn'.! !
@@ -700,7 +810,7 @@ isNotOTurn
 isNotXTurn
 	^ 'Is not Xs turn'.! !
 
-!TerniLapilli class methodsFor: 'as yet unclassified' stamp: 'gl 10/15/2019 19:10:34'!
+!TerniLapilli class methodsFor: 'as yet unclassified' stamp: 'VPM 10/16/2019 12:05:59'!
 magicSquare
 	
 	| conversionArray |
@@ -715,5 +825,4 @@ magicSquare
 		at: 7 put: 8;
 		at: 8 put: 1;
 		at: 9 put: 6;
-		at: 10 put: 0;
 		yourself! !
