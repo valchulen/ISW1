@@ -1,0 +1,1329 @@
+
+
+----STARTUP---- (31 October 2019 15:56:18) as /home/glipina/Documents/linux64(3)/linux64/CuisUniversity-3938.image!
+
+
+Object subclass: #TusLibros
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #TusLibros category: #TusLibros stamp: 'sjd 10/31/2019 15:57:23'!
+Object subclass: #TusLibros
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+Object subclass: #TusLibrosTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #TusLibrosTest category: #TusLibros stamp: 'sjd 10/31/2019 15:57:34'!
+Object subclass: #TusLibrosTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!TusLibrosTest methodsFor: 'no messages' stamp: 'sjd 10/31/2019 15:58:12'!
+test01CreateShoppingCartEmpty! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 15:58:25'!
+test02AddItemInCartCorrectly! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 15:58:36'!
+test02AddItemToShoppingCartCorrectly! !
+
+!methodRemoval: TusLibrosTest #test02AddItemToShoppingCartCorrectly stamp: 'sjd 10/31/2019 15:58:40'!
+test02AddItemToShoppingCartCorrectly!
+
+!methodRemoval: TusLibrosTest #test02AddItemInCartCorrectly stamp: 'sjd 10/31/2019 15:58:44'!
+test02AddItemInCartCorrectly!
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 15:58:59'!
+test02AddItemToShoppingCartCorrectly! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 15:59:14'!
+test03FindItemInShoppingCartCorrectly! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:00:11'!
+test03SearchUnexistingItemInShoppingCartThrowsError! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:00:16'!
+test04SearchUnexistingItemInShoppingCartThrowsError! !
+
+!methodRemoval: TusLibrosTest #test03SearchUnexistingItemInShoppingCartThrowsError stamp: 'sjd 10/31/2019 16:00:21'!
+test03SearchUnexistingItemInShoppingCartThrowsError!
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:00:47'!
+test05AddExistingItemCorrectly! !
+!TusLibrosTest methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:01:15'!
+test06ListShoppingCartElementsCorrectly! !
+
+!classDefinition: #ShoppingCart category: #TusLibros stamp: 'sjd 10/31/2019 16:03:04'!
+Object subclass: #ShoppingCart
+	instanceVariableNames: 'elements'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!TusLibrosTest methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:02:48' prior: 50777382!
+test01CreateShoppingCartEmpty
+	| shoppingcart | 
+	
+	shoppingcart := ShoppingCart new.
+	
+	shoppingcart add: 'Item'.
+	! !
+
+TusLibros subclass: #ShoppingCart
+	instanceVariableNames: 'elements'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #ShoppingCart category: #TusLibros stamp: 'sjd 10/31/2019 16:03:31'!
+TusLibros subclass: #ShoppingCart
+	instanceVariableNames: 'elements'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!TusLibrosTest methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:04:00' prior: 50777442!
+test01CreateShoppingCartEmpty
+	| shoppingcart | 
+	
+	shoppingcart := ShoppingCart new.
+	
+	shoppingcart add: 'Item'.
+	
+	self assert: 1 equals: shoppingcart elements size.
+	! !
+!ShoppingCart methodsFor: 'no messages' stamp: 'sjd 10/31/2019 16:06:00'!
+initialize
+	elements := Collection new.! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:06:18' prior: 50777461!
+test01CreateShoppingCartEmpty
+	| shoppingcart | 
+	
+	shoppingcart := ShoppingCart new.
+	
+	shoppingcart add: 'Item'.
+	
+	self assert: 1 equals: shoppingcart elements size.
+	! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:06:39' prior: 50777474!
+test01CreateShoppingCartEmpty
+	| shoppingcart | 
+	
+	shoppingcart := ShoppingCart new.
+	
+	
+	! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:06:48' prior: 50777403!
+test02AddItemToShoppingCartCorrectly
+
+| shoppingcart |
+shoppingcart add: 'Item'.
+	
+	self assert: 1 equals: shoppingcart elements size.! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:07:13' prior: 50777490!
+test02AddItemToShoppingCartCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item'.
+	
+	self assert: 1 equals: shoppingcart elements size.! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:07:21' prior: 50777483!
+test01CreateShoppingCartEmpty
+	| shoppingcart | 
+	
+	shoppingcart := ShoppingCart new.
+	
+	self assert: 1 equals: shoppingcart elements size.
+	! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:07:26' prior: 50777507!
+test01CreateShoppingCartEmpty
+	| shoppingcart | 
+	
+	shoppingcart := ShoppingCart new.
+	
+	self assert: 0 equals: shoppingcart elements size.
+	! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:08:35' prior: 50777407!
+test03FindItemInShoppingCartCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item'.
+	
+	self assert: 'Item' equals: (shoppingcart findItem: 'Item').! !
+
+!methodRemoval: TusLibrosTests #test05AddExistingItemCorrectly stamp: 'sjd 10/31/2019 16:09:11'!
+test05AddExistingItemCorrectly!
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:09:17'!
+test05ListShoppingCartElementsCorrectly! !
+
+!methodRemoval: TusLibrosTests #test06ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 16:09:21'!
+test06ListShoppingCartElementsCorrectly!
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:10:01' prior: 50777536!
+test05ListShoppingCartElementsCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item'.
+	
+	self assert: 'Item' equals: (shoppingcart findItem: 'Item').! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:10:19' prior: 50777546!
+test05ListShoppingCartElementsCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1'.
+	shoppingcart add: 'Item2'.
+		
+	self assert: 'Item' equals: (shoppingcart findItem: 'Item').! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:10:44' prior: 50777555!
+test05ListShoppingCartElementsCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1'.
+	shoppingcart add: 'Item2'.
+		
+	self assert: 'Item1, Item2' equals: shoppingcart list.! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:10:48' prior: 50777565!
+test05ListShoppingCartElementsCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1'.
+	shoppingcart add: 'Item2'.
+		
+	self assert: 'Item1, Item2' equals: shoppingcart listElements.! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:11:10'!
+test06AddManyItemsWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1'.
+	shoppingcart add: 'Item2'.
+		
+	self assert: 'Item1, Item2' equals: shoppingcart listElements.! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:11:15' prior: 50777585!
+test06AddManyItemsWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1'.
+		
+	self assert: 'Item1, Item2' equals: shoppingcart listElements.! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:11:28' prior: 50777575!
+test05ListShoppingCartElementsCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1'.
+	shoppingcart add: 'Item2'.
+	
+	
+	self assert: 1 equals: shoppingcart elements size.	
+	self assert: 'Item1, Item2' equals: shoppingcart listElements.! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:11:39' prior: 50777604!
+test05ListShoppingCartElementsCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1'.
+	shoppingcart add: 'Item2'.
+	
+	
+	self assert: 1 equals: shoppingcart elements size.	
+	self assert: 'Item1, Item1, Item1' equals: shoppingcart listElements.! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:11:44' prior: 50777616!
+test05ListShoppingCartElementsCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	shoppingcart add: 'Item2'.
+	
+	
+	self assert: 1 equals: shoppingcart elements size.	
+	self assert: 'Item1, Item1, Item1' equals: shoppingcart listElements.! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:11:51' prior: 50777628!
+test05ListShoppingCartElementsCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	
+	
+	self assert: 1 equals: shoppingcart elements size.	
+	self assert: 'Item1, Item1, Item1' equals: shoppingcart listElements.! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:11:55' prior: 50777641!
+test05ListShoppingCartElementsCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	
+	
+	self assert: 3 equals: shoppingcart elements size.	
+	self assert: 'Item1, Item1, Item1' equals: shoppingcart listElements.! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:12:17' prior: 50777595!
+test06AddManyItemsWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	
+	
+	self assert: 3 equals: shoppingcart elements size.	
+	self assert: 'Item1, Item1, Item1' equals: shoppingcart listElements.! !
+!TusLibrosTests methodsFor: 'shoppingCartTests' stamp: 'sjd 10/31/2019 16:14:22' prior: 50777653!
+test05ListShoppingCartElementsCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1'.
+	shoppingcart add: 'Item2'.
+	shoppingcart add: 'Item3'.
+	
+	self assert: 'Item1, Item2, Item3' equals: shoppingcart listElements.! !
+
+!classDefinition: #ClassToExtractMethod category: #'__Refactoring-TestData__' stamp: 'sjd 10/31/2019 16:17:02'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+!ClassToExtractMethod methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:17:02'!
+mExtractMethodExample: anArgument
+
+	<anAnnoyingPragma>
+	| localVar |
+	<anotherAnnoyingPragma>
+	self m1.
+	self m2: 'hey true'.
+	self m3: anArgument , '^ 21'.
+	localVar _ Set with: 'hello'.
+	localVar := #($x $y $z) size and: [ (9) * 3 ].
+	^ localVar + ((4))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:02'!
+m1 ^ 4! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:02'!
+m2
+
+	^ 4! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:02' prior: 50777708!
+m1 ^ self m2! !
+
+!testRun: #ExtractMethodTest #test09ExtractingALiteralCreatesANewMethodAndChangesExistingCodeToCallThatNewMethod stamp: 'sjd 10/31/2019 16:17:02'!
+PASSED!
+
+!classRemoval: #ClassToExtractMethod stamp: 'sjd 10/31/2019 16:17:04'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+
+!classDefinition: #ClassToExtractMethod category: #'__Refactoring-TestData__' stamp: 'sjd 10/31/2019 16:17:04'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+!ClassToExtractMethod methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:17:04'!
+mExtractMethodExample: anArgument
+
+	<anAnnoyingPragma>
+	| localVar |
+	<anotherAnnoyingPragma>
+	self m1.
+	self m2: 'hey true'.
+	self m3: anArgument , '^ 21'.
+	localVar _ Set with: 'hello'.
+	localVar := #($x $y $z) size and: [ (9) * 3 ].
+	^ localVar + ((4))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:04'!
+m1 self m3.
+	self m4: 5! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:04'!
+m2
+
+	self m3.
+	self m4: 5! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:04' prior: 50777750!
+m1 self m2! !
+
+!testRun: #ExtractMethodTest #test15ExtractingAListOfStatementsCreatesANewMethodWithoutReturn stamp: 'sjd 10/31/2019 16:17:04'!
+PASSED!
+
+!classRemoval: #ClassToExtractMethod stamp: 'sjd 10/31/2019 16:17:06'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+
+!classDefinition: #ClassToExtractMethod category: #'__Refactoring-TestData__' stamp: 'sjd 10/31/2019 16:17:06'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+!ClassToExtractMethod methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:17:06'!
+mExtractMethodExample: anArgument
+
+	<anAnnoyingPragma>
+	| localVar |
+	<anotherAnnoyingPragma>
+	self m1.
+	self m2: 'hey true'.
+	self m3: anArgument , '^ 21'.
+	localVar _ Set with: 'hello'.
+	localVar := #($x $y $z) size and: [ (9) * 3 ].
+	^ localVar + ((4))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:06'!
+m1 ^ '^ 3' size! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:06'!
+m2
+
+	^ '^ 3' size! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:06' prior: 50777792!
+m1 ^ self m2! !
+
+!testRun: #ExtractMethodTest #test17AStringContainingTheReturnCharacterCanBeExtracted stamp: 'sjd 10/31/2019 16:17:06'!
+PASSED!
+
+!classRemoval: #ClassToExtractMethod stamp: 'sjd 10/31/2019 16:17:08'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+
+!classDefinition: #ClassToExtractMethod category: #'__Refactoring-TestData__' stamp: 'sjd 10/31/2019 16:17:08'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+!ClassToExtractMethod methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:17:08'!
+mExtractMethodExample: anArgument
+
+	<anAnnoyingPragma>
+	| localVar |
+	<anotherAnnoyingPragma>
+	self m1.
+	self m2: 'hey true'.
+	self m3: anArgument , '^ 21'.
+	localVar _ Set with: 'hello'.
+	localVar := #($x $y $z) size and: [ (9) * 3 ].
+	^ localVar + ((4))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:08'!
+m1
+	
+	self m3.
+	self m4: 5.! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:08'!
+m2
+
+	self m3.
+	self m4: 5! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:08' prior: 50777834!
+m1
+	
+	self m2.! !
+
+!testRun: #ExtractMethodTest #test18ExtractingAListOfStatementsIncludingDotsRemovesThemAndContinuesWithMethodExtraction stamp: 'sjd 10/31/2019 16:17:08'!
+PASSED!
+
+!classRemoval: #ClassToExtractMethod stamp: 'sjd 10/31/2019 16:17:10'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+
+!classDefinition: #ClassToExtractMethod category: #'__Refactoring-TestData__' stamp: 'sjd 10/31/2019 16:17:10'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+!ClassToExtractMethod methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:17:10'!
+mExtractMethodExample: anArgument
+
+	<anAnnoyingPragma>
+	| localVar |
+	<anotherAnnoyingPragma>
+	self m1.
+	self m2: 'hey true'.
+	self m3: anArgument , '^ 21'.
+	localVar _ Set with: 'hello'.
+	localVar := #($x $y $z) size and: [ (9) * 3 ].
+	^ localVar + ((4))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:10'!
+m1 ^ ((42))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:10'!
+m2
+
+	^ 42! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:10' prior: 50777877!
+m1 ^ ((self m2))! !
+
+!testRun: #ExtractMethodTest #test19ASelectionContainingAdditionalParenthesesAtTheBeginningAndOrEndCanBeExtracted stamp: 'sjd 10/31/2019 16:17:10'!
+PASSED!
+
+!classRemoval: #ClassToExtractMethod stamp: 'sjd 10/31/2019 16:17:12'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+
+!classDefinition: #ClassToExtractMethod category: #'__Refactoring-TestData__' stamp: 'sjd 10/31/2019 16:17:12'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+!ClassToExtractMethod methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:17:12'!
+mExtractMethodExample: anArgument
+
+	<anAnnoyingPragma>
+	| localVar |
+	<anotherAnnoyingPragma>
+	self m1.
+	self m2: 'hey true'.
+	self m3: anArgument , '^ 21'.
+	localVar _ Set with: 'hello'.
+	localVar := #($x $y $z) size and: [ (9) * 3 ].
+	^ localVar + ((4))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:12'!
+m1 | local | ^ local + 3! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:12'!
+m2: local
+
+	^ local + 3! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:12' prior: 50777919!
+m1 | local | ^ self m2: local! !
+
+!testRun: #ExtractMethodTest #test20ASelectionContainingALocalVariableIsParameterizedOnTheExtractedMessage stamp: 'sjd 10/31/2019 16:17:12'!
+PASSED!
+
+!classRemoval: #ClassToExtractMethod stamp: 'sjd 10/31/2019 16:17:14'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+
+!classDefinition: #ClassToExtractMethod category: #'__Refactoring-TestData__' stamp: 'sjd 10/31/2019 16:17:14'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+!ClassToExtractMethod methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:17:14'!
+mExtractMethodExample: anArgument
+
+	<anAnnoyingPragma>
+	| localVar |
+	<anotherAnnoyingPragma>
+	self m1.
+	self m2: 'hey true'.
+	self m3: anArgument , '^ 21'.
+	localVar _ Set with: 'hello'.
+	localVar := #($x $y $z) size and: [ (9) * 3 ].
+	^ localVar + ((4))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:14'!
+m1 ^ (9) * 3! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:14'!
+m2
+
+	^ (9) * 3! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:14' prior: 50777962!
+m1 ^ self m2! !
+
+!testRun: #ExtractMethodTest #test21ASelectionContainingAdditionalParenthesesOnOneSideCanBeExtractedAndItIsNotTrimmed stamp: 'sjd 10/31/2019 16:17:14'!
+PASSED!
+
+!classRemoval: #ClassToExtractMethod stamp: 'sjd 10/31/2019 16:17:16'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+
+!classDefinition: #ClassToExtractMethod category: #'__Refactoring-TestData__' stamp: 'sjd 10/31/2019 16:17:16'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+!ClassToExtractMethod methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:17:16'!
+mExtractMethodExample: anArgument
+
+	<anAnnoyingPragma>
+	| localVar |
+	<anotherAnnoyingPragma>
+	self m1.
+	self m2: 'hey true'.
+	self m3: anArgument , '^ 21'.
+	localVar _ Set with: 'hello'.
+	localVar := #($x $y $z) size and: [ (9) * 3 ].
+	^ localVar + ((4))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:16'!
+m1 | localVar | ^ localVar + ((4))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:16'!
+m2: localVar
+
+	^ localVar + ((4))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:16' prior: 50778004!
+m1 | localVar | ^ self m2: localVar! !
+
+!testRun: #ExtractMethodTest #test22ItIsPossibleToExtractTheLastExpressionOfAMethod stamp: 'sjd 10/31/2019 16:17:16'!
+PASSED!
+
+!classRemoval: #ClassToExtractMethod stamp: 'sjd 10/31/2019 16:17:18'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+
+!classDefinition: #ClassToExtractMethod category: #'__Refactoring-TestData__' stamp: 'sjd 10/31/2019 16:17:18'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+!ClassToExtractMethod methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:17:18'!
+mExtractMethodExample: anArgument
+
+	<anAnnoyingPragma>
+	| localVar |
+	<anotherAnnoyingPragma>
+	self m1.
+	self m2: 'hey true'.
+	self m3: anArgument , '^ 21'.
+	localVar _ Set with: 'hello'.
+	localVar := #($x $y $z) size and: [ (9) * 3 ].
+	^ localVar + ((4))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:18'!
+m1 ^ [ |something| something _ 3 ]! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:18'!
+m2
+
+	^ [ |something| something _ 3 ]! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:18' prior: 50778048!
+m1 ^ self m2! !
+
+!testRun: #ExtractMethodTest #test26ItIsPossibleToExtractAnEntireBlockIncludingALocalAssignment stamp: 'sjd 10/31/2019 16:17:18'!
+PASSED!
+
+!classRemoval: #ClassToExtractMethod stamp: 'sjd 10/31/2019 16:17:20'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+
+!classDefinition: #ClassToExtractMethod category: #'__Refactoring-TestData__' stamp: 'sjd 10/31/2019 16:17:20'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+!ClassToExtractMethod methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:17:20'!
+mExtractMethodExample: anArgument
+
+	<anAnnoyingPragma>
+	| localVar |
+	<anotherAnnoyingPragma>
+	self m1.
+	self m2: 'hey true'.
+	self m3: anArgument , '^ 21'.
+	localVar _ Set with: 'hello'.
+	localVar := #($x $y $z) size and: [ (9) * 3 ].
+	^ localVar + ((4))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:20'!
+m1 ^ 2 ifNil: [ #boo ] ifNotNil: [ #yay ]! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:20'!
+m2
+
+	^ 2 ifNil: [ #boo ] ifNotNil: [ #yay ]! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:20' prior: 50778091!
+m1 ^ self m2! !
+
+!testRun: #ExtractMethodTest #test27ItIsPossibleToExtractExpressionsWithOptimizedSelectors stamp: 'sjd 10/31/2019 16:17:20'!
+PASSED!
+
+!classRemoval: #ClassToExtractMethod stamp: 'sjd 10/31/2019 16:17:22'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+
+!classDefinition: #ClassToExtractMethod category: #'__Refactoring-TestData__' stamp: 'sjd 10/31/2019 16:17:22'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+!ClassToExtractMethod methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 16:17:22'!
+mExtractMethodExample: anArgument
+
+	<anAnnoyingPragma>
+	| localVar |
+	<anotherAnnoyingPragma>
+	self m1.
+	self m2: 'hey true'.
+	self m3: anArgument , '^ 21'.
+	localVar _ Set with: 'hello'.
+	localVar := #($x $y $z) size and: [ (9) * 3 ].
+	^ localVar + ((4))! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:22'!
+m1: arg ^ 2 + arg * 3! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:22'!
+m2: arg
+
+	^ 2 + arg! !
+!ClassToExtractMethod methodsFor: 'category' stamp: 'sjd 10/31/2019 16:17:22' prior: 50778134!
+m1: arg ^ (self m2: arg) * 3! !
+
+!testRun: #ExtractMethodTest #test29ExtractingABinaryExpressionToAKeywordMessageIntroducesParenthesesToNotBreakOriginalPrecedence stamp: 'sjd 10/31/2019 16:17:22'!
+PASSED!
+
+!classRemoval: #ClassToExtractMethod stamp: 'sjd 10/31/2019 16:17:24'!
+Object subclass: #ClassToExtractMethod
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: '__Refactoring-TestData__'!
+
+----QUIT----(31 October 2019 16:18:09) CuisUniversity-3938.image priorSource: 14319118!
+
+----STARTUP---- (31 October 2019 16:19:33) as /home/glipina/Documents/linux64(3)/linux64/CuisUniversity-3938.image!
+
+
+----QUIT----(31 October 2019 16:19:48) CuisUniversity-3938.image priorSource: 14288235!
+
+----STARTUP---- (31 October 2019 17:07:43) as /home/glipina/Documents/linux64(3)/linux64/CuisUniversity-3938.image!
+
+
+TestCase subclass: #TusLibrosTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #TusLibrosTest category: #TusLibros stamp: 'sjd 10/31/2019 17:07:54'!
+TestCase subclass: #TusLibrosTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:08:01'!
+ERROR!
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:08:01'!
+ERROR!
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:08:29'!
+ERROR!
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:08:29'!
+ERROR!
+!ShoppingCart methodsFor: 'initialization' stamp: 'sjd 10/31/2019 17:09:25'!
+elements
+	^elements.! !
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:09:55'!
+ERROR!
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:09:55'!
+ERROR!
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:10:05'!
+ERROR!
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:10:05'!
+ERROR!
+!ShoppingCart methodsFor: 'nil' stamp: 'sjd 10/31/2019 17:11:07'!
+size
+	^ elements size.! !
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:11:28'!
+ERROR!
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:11:28'!
+ERROR!
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:12:19' prior: 50777515!
+test01CreateShoppingCartEmpty
+	| shoppingcart | 
+	
+	shoppingcart := ShoppingCart new.
+	
+	self assert: 0 equals: shoppingcart size.
+	! !
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:12:23'!
+ERROR!
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:12:23'!
+ERROR!
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:12:44'!
+ERROR!
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:12:44'!
+ERROR!
+
+a := Collection new.!
+
+a := Collection new.!
+!ShoppingCart methodsFor: 'initialization' stamp: 'sjd 10/31/2019 17:15:24' prior: 50777469!
+initialize
+	elements := OrderedCollection new.! !
+!ShoppingCart methodsFor: 'initialization' stamp: 'sjd 10/31/2019 17:15:31' prior: 50778242!
+initialize
+	elements := OrderedCollection new.! !
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 17:15:37'!
+PASSED!
+!ShoppingCart methodsFor: 'nil' stamp: 'sjd 10/31/2019 17:16:09'!
+add: anItem
+	elements add: anItem.! !
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:17:45' prior: 50777498!
+test02AddItemToShoppingCartCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item'.
+	
+	self assert: 1 equals: shoppingcart size.! !
+
+!testRun: #TusLibrosTest #test02AddItemToShoppingCartCorrectly stamp: 'sjd 10/31/2019 17:17:48'!
+PASSED!
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:19:35' prior: 50777523!
+test03FindItemInShoppingCartCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item'.
+	
+	self assert: 'Item' equals: (shoppingcart findItem: 'Item').! !
+!ShoppingCart methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 17:20:09'!
+findItem: anItem
+	^ elements includes: anItem.! !
+
+!testRun: #TusLibrosTest #test03FindItemInShoppingCartCorrectly stamp: 'sjd 10/31/2019 17:20:16'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test03FindItemInShoppingCartCorrectly stamp: 'sjd 10/31/2019 17:20:16'!
+FAILURE!
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:20:27' prior: 50778271!
+test03FindItemInShoppingCartCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item'.
+	
+	self assert: (shoppingcart findItem: 'Item').! !
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:21:05'!
+test04SearchUnexistingItemInShoppingCartReturnsFalse! !
+
+!methodRemoval: TusLibrosTest #test04SearchUnexistingItemInShoppingCartThrowsError stamp: 'sjd 10/31/2019 17:21:05'!
+test04SearchUnexistingItemInShoppingCartThrowsError!
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:21:46' prior: 50778300!
+test04SearchUnexistingItemInShoppingCartReturnsFalse
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item'.
+	
+	self deny: (shoppingcart findItem: 'DifferentItem').! !
+
+!testRun: #TusLibrosTest #test04SearchUnexistingItemInShoppingCartReturnsFalse stamp: 'sjd 10/31/2019 17:23:10'!
+PASSED!
+!ShoppingCart methodsFor: 'as yet unclassified' stamp: 'sjd 10/31/2019 17:23:25'!
+listElements! !
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:25:07'!
+test07HowManyElementsOfTypeWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	
+	
+	self assert: 3 equals: shoppingcart elements size.	
+	self assert: 'Item1, Item1, Item1' equals: shoppingcart listElements.! !
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:26:25'!
+test07HowManyElementsOfWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	shoppingcart add: 'Item2' times: 2.
+		
+	self assert: 3 equals: (shoppingcart howManyOf: 'Item1').! !
+
+!testRun: #TusLibrosTest #test04SearchUnexistingItemInShoppingCartReturnsFalse stamp: 'sjd 10/31/2019 17:26:42'!
+PASSED!
+
+!methodRemoval: TusLibrosTest #test07HowManyElementsOfTypeWorksCorrectly stamp: 'sjd 10/31/2019 17:26:59'!
+test07HowManyElementsOfTypeWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	
+	
+	self assert: 3 equals: shoppingcart elements size.	
+	self assert: 'Item1, Item1, Item1' equals: shoppingcart listElements.!
+!ShoppingCart methodsFor: 'printing' stamp: 'sjd 10/31/2019 17:28:31' prior: 50778324!
+listElements
+	
+	| list |
+	
+	list := ''.
+	elements do: [:element | list, ', ', element].
+	
+	! !
+
+'Hola, ' truncateTo: 4!
+
+'Hola, ' truncateTo: ('Hola, ' size - 2)!
+!ShoppingCart methodsFor: 'printing' stamp: 'sjd 10/31/2019 17:31:46' prior: 50778365!
+listElements
+	
+	| list |
+	
+	list := ''.
+	elements do: [:element | list, ', ', element].
+	list truncateTo: list size - 2.
+	^list.
+	
+	! !
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:31:52'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:31:52'!
+FAILURE!
+!ShoppingCart methodsFor: 'printing' stamp: 'sjd 10/31/2019 17:32:21' prior: 50778373!
+listElements
+	
+	| list |
+	
+	list := ''.
+	elements do: [:element | list, ', '. list, element.].
+	list truncateTo: list size - 2.
+	^list.
+	
+	! !
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:32:28'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:32:28'!
+FAILURE!
+!ShoppingCart methodsFor: 'printing' stamp: 'sjd 10/31/2019 17:32:45' prior: 50778387!
+listElements
+	
+	| list |
+	
+	list := ''.
+	elements do: [:element | list, ', '. list, element.].
+	"list truncateTo: list size - 2."
+	^list.
+	
+	! !
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:32:50'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:32:50'!
+FAILURE!
+!ShoppingCart methodsFor: 'printing' stamp: 'sjd 10/31/2019 17:33:25' prior: 50778402!
+listElements
+	
+	| result |
+	
+	result := ''.
+	elements do: [:element | result, ', '. result, element.].
+	"list truncateTo: list size - 2."
+	^result.
+	
+	! !
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:33:31'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:33:31'!
+FAILURE!
+!ShoppingCart methodsFor: 'printing' stamp: 'sjd 10/31/2019 17:36:02' prior: 50778417!
+listElements
+	
+	| result |
+	
+	result := ''.
+	elements do: [:element | result , ', '. result , element.].
+	"list truncateTo: list size - 2."
+	^result.
+	
+	! !
+!ShoppingCart methodsFor: 'printing' stamp: 'sjd 10/31/2019 17:37:24' prior: 50778432!
+listElements
+	
+	| result |
+	
+	result := ''.
+	elements do: [:element | result appendToString:', '. result appendToString:element.].
+	"list truncateTo: list size - 2."
+	^result.
+	
+	! !
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:37:32'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:37:32'!
+FAILURE!
+!ShoppingCart methodsFor: 'printing' stamp: 'sjd 10/31/2019 17:37:58' prior: 50778440!
+listElements
+	
+	| result |
+	
+	result := ''.
+	elements do: [:element | result,', '. result,element.].
+	"list truncateTo: list size - 2."
+	^result.
+	
+	! !
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:38:03'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:38:03'!
+FAILURE!
+!ShoppingCart methodsFor: 'printing' stamp: 'sjd 10/31/2019 17:38:20' prior: 50778456!
+listElements
+	
+	| result |
+	
+	result := ''.
+	elements do: [:element | result,', ', result,element.].
+	"list truncateTo: list size - 2."
+	^result.
+	
+	! !
+!ShoppingCart methodsFor: 'printing' stamp: 'sjd 10/31/2019 17:38:24' prior: 50778471!
+listElements
+	
+	| result |
+	
+	result := ''.
+	elements do: [:element | result,', ',element.].
+	"list truncateTo: list size - 2."
+	^result.
+	
+	! !
+!ShoppingCart methodsFor: 'printing' stamp: 'sjd 10/31/2019 17:38:44' prior: 50778479!
+listElements
+	
+	| result |
+	
+	result := ''.
+	elements do: [:element | result := result,', ',element.].
+	"list truncateTo: list size - 2."
+	^result.
+	
+	! !
+
+!testRun: #TusLibrosTest #test04SearchUnexistingItemInShoppingCartReturnsFalse stamp: 'sjd 10/31/2019 17:38:52'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:39:00'!
+FAILURE!
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:39:00'!
+FAILURE!
+!ShoppingCart methodsFor: 'printing' stamp: 'sjd 10/31/2019 17:39:38' prior: 50778487!
+listElements
+	
+	| result |
+	
+	result := ''.
+	elements do: [:element | result := result,element,', '.].
+	result := result truncateTo: result size - 2.
+	^result.
+	
+	! !
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 17:39:44'!
+PASSED!
+!ShoppingCart methodsFor: 'adding' stamp: 'sjd 10/31/2019 17:40:12'!
+add: anItem times: aNumber! !
+
+----End fileIn of /home/glipina/Documents/linux64(3)/linux64/Packages/TerseGuide.pck.st----!
+!ShoppingCart methodsFor: 'adding' stamp: 'sjd 10/31/2019 17:41:31' prior: 50778517!
+add: anItem times: aNumber
+
+	aNumber timesRepeat: [self add: anItem].! !
+
+!testRun: #TusLibrosTest #test06AddManyItemsWorksCorrectly stamp: 'sjd 10/31/2019 17:41:36'!
+PASSED!
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:42:07' prior: 50777665!
+test06AddManyItemsWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	
+	
+	self assert: 3 equals: shoppingcart size.	
+	self assert: 'Item1, Item1, Item1' equals: shoppingcart listElements.! !
+
+!testRun: #TusLibrosTest #test06AddManyItemsWorksCorrectly stamp: 'sjd 10/31/2019 17:42:11'!
+PASSED!
+!ShoppingCart methodsFor: 'searching' stamp: 'sjd 10/31/2019 17:43:22'!
+howManyOf: anItem! !
+!ShoppingCart methodsFor: 'searching' stamp: 'sjd 10/31/2019 17:45:10' prior: 50781555!
+howManyOf: anItem
+	elements select: [:element | element = anItem] size.! !
+!ShoppingCart methodsFor: 'searching' stamp: 'sjd 10/31/2019 17:45:17' prior: 50781559!
+howManyOf: anItem
+	^elements select: [:element | element = anItem] size.! !
+
+!testRun: #TusLibrosTest #test07HowManyElementsOfWorksCorrectly stamp: 'sjd 10/31/2019 17:45:32'!
+ERROR!
+
+!testRun: #TusLibrosTest #test07HowManyElementsOfWorksCorrectly stamp: 'sjd 10/31/2019 17:45:32'!
+ERROR!
+!ShoppingCart methodsFor: 'searching' stamp: 'sjd 10/31/2019 17:46:39' prior: 50781565!
+howManyOf: anItem
+	^(elements select: [:element | element = anItem]) size.! !
+
+!testRun: #TusLibrosTest #test07HowManyElementsOfWorksCorrectly stamp: 'sjd 10/31/2019 17:46:43'!
+PASSED!
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:48:22'!
+test08RemovingItemFromShoppingCartWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	shoppingcart remove: 'Item1'.
+		
+	self assert: 2 equals: (shoppingcart howManyOf: 'Item1').! !
+!ShoppingCart methodsFor: 'removing' stamp: 'sjd 10/31/2019 17:50:41'!
+remove: anItem
+	elements remove: anItem ifAbsent: [self error: 'No se encuentra el elemento que desea borrar'].! !
+
+!testRun: #TusLibrosTest #test08RemovingItemFromShoppingCartWorksCorrectly stamp: 'sjd 10/31/2019 17:50:50'!
+PASSED!
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:53:40'!
+test09RemovingUnexistingItemFromShoppingThrowsError
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	
+	self should: [shoppingcart remove: 'Item2'] raise: Error withMessageText: ''. ! !
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:53:55' prior: 50781606!
+test09RemovingUnexistingItemFromShoppingThrowsError
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	
+	self should: [shoppingcart remove: 'Item2'] raise: Error withMessageText: 'No se encuentra el elemento que desea borrar'. ! !
+
+!testRun: #TusLibrosTest #test09RemovingUnexistingItemFromShoppingThrowsError stamp: 'sjd 10/31/2019 17:53:58'!
+PASSED!
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:54:58'!
+test10RemovesAllFromShoppingCartWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	
+	self should: [shoppingcart remove: 'Item2'] raise: Error withMessageText: 'No se encuentra el elemento que desea borrar'. ! !
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:55:03' prior: 50781586!
+test08RemovingItemFromShoppingCartWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	shoppingcart removeAll: 'Item1'.
+		
+	self assert: 2 equals: (shoppingcart howManyOf: 'Item1').! !
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:55:08' prior: 50781644!
+test08RemovingItemFromShoppingCartWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	shoppingcart removeAll: 'Item1'.
+		
+	self assert: 0 equals: (shoppingcart howManyOf: 'Item1').! !
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:55:22' prior: 50781655!
+test08RemovingItemFromShoppingCartWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	shoppingcart remove: 'Item1'.
+		
+	self assert: 2 equals: (shoppingcart howManyOf: 'Item1').! !
+
+!testRun: #TusLibrosTest #test08RemovingItemFromShoppingCartWorksCorrectly stamp: 'sjd 10/31/2019 17:55:25'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09RemovingUnexistingItemFromShoppingThrowsError stamp: 'sjd 10/31/2019 17:55:29'!
+PASSED!
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:55:48' prior: 50781632!
+test10RemovesAllFromShoppingCartWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	shoppingcart removeAll: 'Item1'.
+		
+	self assert: 0 equals: (shoppingcart howManyOf: 'Item1').! !
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:56:59'!
+test10RemovesTimesFromShoppingCartWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	shoppingcart removeAll: 'Item1'.
+		
+	self assert: 0 equals: (shoppingcart howManyOf: 'Item1').! !
+
+!methodRemoval: TusLibrosTest #test10RemovesAllFromShoppingCartWorksCorrectly stamp: 'sjd 10/31/2019 17:57:03'!
+test10RemovesAllFromShoppingCartWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	shoppingcart removeAll: 'Item1'.
+		
+	self assert: 0 equals: (shoppingcart howManyOf: 'Item1').!
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 17:57:18' prior: 50781695!
+test10RemovesTimesFromShoppingCartWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	shoppingcart remove: 'Item1' times: 3.
+		
+	self assert: 0 equals: (shoppingcart howManyOf: 'Item1').! !
+!ShoppingCart methodsFor: 'removing' stamp: 'sjd 10/31/2019 17:59:12'!
+remove: anItem times: aNumber
+	aNumber timesRepeat: [self remove: anItem withError: 'No puede eliminar mas elementos de los que hay en el carro'].! !
+!ShoppingCart methodsFor: 'removing' stamp: 'sjd 10/31/2019 17:59:41'!
+remove: anItem withError: errorMessage
+	elements remove: anItem ifAbsent: [self error: errorMessage].! !
+!ShoppingCart methodsFor: 'removing' stamp: 'sjd 10/31/2019 18:00:02' prior: 50781596!
+remove: anItem
+	elements remove: anItem withError: 'No se encuentra el elemento que desea borrar'.! !
+
+!testRun: #TusLibrosTest #test10RemovesTimesFromShoppingCartWorksCorrectly stamp: 'sjd 10/31/2019 18:00:20'!
+PASSED!
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 18:00:40'!
+test11RemovesMoreTimesFromShoppingThrowsError
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	shoppingcart remove: 'Item1' times: 3.
+		
+	self assert: 0 equals: (shoppingcart howManyOf: 'Item1').! !
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 18:01:10' prior: 50781750!
+test11RemovesMoreTimesFromShoppingThrowsError
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	
+	self should: [shoppingcart remove: 'Item2'] raise: Error withMessageText: 'No se encuentra el elemento que desea borrar'. ! !
+
+!methodRemoval: ShoppingCart #remove:withError: stamp: 'sjd 10/31/2019 18:02:22'!
+remove: anItem withError: errorMessage
+	elements remove: anItem ifAbsent: [self error: errorMessage].!
+!ShoppingCart methodsFor: 'removing' stamp: 'sjd 10/31/2019 18:02:31' prior: 50781727!
+remove: anItem times: aNumber
+	aNumber timesRepeat: [self remove: anItem].! !
+!ShoppingCart methodsFor: 'removing' stamp: 'sjd 10/31/2019 18:03:06' prior: 50781740!
+remove: anItem
+	elements remove: anItem ifAbsent: [self error: 'No se encuentra el elemento que desea borrar'].! !
+
+!testRun: #TusLibrosTest #test09RemovingUnexistingItemFromShoppingThrowsError stamp: 'sjd 10/31/2019 18:03:21'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10RemovesTimesFromShoppingCartWorksCorrectly stamp: 'sjd 10/31/2019 18:03:24'!
+PASSED!
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 18:03:34' prior: 50781761!
+test11RemovesMoreTimesFromShoppingThrowsError
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	
+	self should: [shoppingcart remove: 'Item2' times:4] raise: Error withMessageText: 'No se encuentra el elemento que desea borrar'. ! !
+
+!testRun: #TusLibrosTest #test11RemovesMoreTimesFromShoppingThrowsError stamp: 'sjd 10/31/2019 18:03:37'!
+PASSED!
+!TusLibrosTest methodsFor: 'tests - shoppingCart' stamp: 'sjd 10/31/2019 18:04:29'!
+test12RemoveAllFromShoppingWorksCorrectly
+	| shoppingcart |
+	
+	shoppingcart := ShoppingCart new.
+	shoppingcart add: 'Item1' times: 3.
+	shoppingcart removeAll.
+	
+	self assert: 0 equals: shoppingcart size! !
+!ShoppingCart methodsFor: 'removing' stamp: 'sjd 10/31/2019 18:04:50'!
+removeAll
+	elements removeAll.! !
+
+!testRun: #TusLibrosTest #test01CreateShoppingCartEmpty stamp: 'sjd 10/31/2019 18:04:54'!
+PASSED!
+
+!testRun: #TusLibrosTest #test02AddItemToShoppingCartCorrectly stamp: 'sjd 10/31/2019 18:04:54'!
+PASSED!
+
+!testRun: #TusLibrosTest #test03FindItemInShoppingCartCorrectly stamp: 'sjd 10/31/2019 18:04:54'!
+PASSED!
+
+!testRun: #TusLibrosTest #test04SearchUnexistingItemInShoppingCartReturnsFalse stamp: 'sjd 10/31/2019 18:04:54'!
+PASSED!
+
+!testRun: #TusLibrosTest #test05ListShoppingCartElementsCorrectly stamp: 'sjd 10/31/2019 18:04:54'!
+PASSED!
+
+!testRun: #TusLibrosTest #test06AddManyItemsWorksCorrectly stamp: 'sjd 10/31/2019 18:04:54'!
+PASSED!
+
+!testRun: #TusLibrosTest #test07HowManyElementsOfWorksCorrectly stamp: 'sjd 10/31/2019 18:04:54'!
+PASSED!
+
+!testRun: #TusLibrosTest #test08RemovingItemFromShoppingCartWorksCorrectly stamp: 'sjd 10/31/2019 18:04:54'!
+PASSED!
+
+!testRun: #TusLibrosTest #test09RemovingUnexistingItemFromShoppingThrowsError stamp: 'sjd 10/31/2019 18:04:54'!
+PASSED!
+
+!testRun: #TusLibrosTest #test10RemovesTimesFromShoppingCartWorksCorrectly stamp: 'sjd 10/31/2019 18:04:54'!
+PASSED!
+
+!testRun: #TusLibrosTest #test11RemovesMoreTimesFromShoppingThrowsError stamp: 'sjd 10/31/2019 18:04:54'!
+PASSED!
+
+!testRun: #TusLibrosTest #test12RemoveAllFromShoppingWorksCorrectly stamp: 'sjd 10/31/2019 18:04:54'!
+PASSED!
+
+----QUIT----(31 October 2019 18:05:10) CuisUniversity-3938.image priorSource: 14288442!

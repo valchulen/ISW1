@@ -1,0 +1,1288 @@
+
+
+----STARTUP---- (3 November 2019 13:49:22) as /home/valchu/Downloads/linux64/CuisUniversity-3938.image!
+
+
+----End fileIn of /home/valchu/Documents/UBA/2019-2c/25-TusLibros/Iteracion1/TusLibros-18.st----!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'VPM 11/3/2019 13:50:00'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 13:50:00'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 13:50:00'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'VPM 11/3/2019 13:50:00'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'VPM 11/3/2019 13:50:00'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 13:50:00'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 13:50:00'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'VPM 11/3/2019 13:50:00'!
+PASSED!
+
+----End fileIn of /home/valchu/Downloads/linux64/Packages/TerseGuide.pck.st----!
+!CartTest methodsFor: 'support' stamp: 'VPM 11/3/2019 13:54:52' prior: 50777538!
+itemSellByTheStore
+	
+	^ Dictionary newFromPairs: { 'validBook'. 50 }! !
+!CartTest methodsFor: 'support' stamp: 'VPM 11/3/2019 13:55:01' prior: 50777524!
+itemNotSellByTheStore
+	
+	^'invalidBook'! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'VPM 11/3/2019 13:55:07'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 13:55:07'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 13:55:07'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'VPM 11/3/2019 13:55:07'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'VPM 11/3/2019 13:55:07'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 13:55:07'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 13:55:07'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'VPM 11/3/2019 13:55:07'!
+PASSED!
+!CartTest methodsFor: 'support' stamp: 'VPM 11/3/2019 13:55:43' prior: 50780582!
+itemSellByTheStore
+	
+	^ 'validBook'! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'VPM 11/3/2019 13:55:44'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 13:55:44'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 13:55:44'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'VPM 11/3/2019 13:55:44'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'VPM 11/3/2019 13:55:44'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 13:55:44'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 13:55:44'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'VPM 11/3/2019 13:55:44'!
+PASSED!
+!CartTest methodsFor: 'support' stamp: 'VPM 11/3/2019 13:56:09' prior: 50777533!
+defaultCatalog
+	
+	^ Dictionary newFromPairs: { self itemSellByTheStore. 50 }! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'VPM 11/3/2019 13:56:10'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 13:56:11'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 13:56:11'!
+ERROR!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'VPM 11/3/2019 13:56:11'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'VPM 11/3/2019 13:56:11'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 13:56:11'!
+ERROR!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 13:56:11'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'VPM 11/3/2019 13:56:11'!
+ERROR!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 13:56:13'!
+ERROR!
+!Cart methodsFor: 'assertions' stamp: 'VPM 11/3/2019 13:57:07' prior: 50777381!
+assertIsValidItem: anItem
+
+	catalog at: anItem ifAbsent: [ self error: self invalidItemErrorMessage ]! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'VPM 11/3/2019 13:57:09'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 13:57:09'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 13:57:09'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'VPM 11/3/2019 13:57:09'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'VPM 11/3/2019 13:57:09'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 13:57:09'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 13:57:09'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'VPM 11/3/2019 13:57:09'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'VPM 11/3/2019 13:57:16'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 13:57:16'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 13:57:16'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'VPM 11/3/2019 13:57:16'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'VPM 11/3/2019 13:57:16'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 13:57:16'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 13:57:16'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'VPM 11/3/2019 13:57:16'!
+PASSED!
+
+Object subclass: #Checkout
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Checkout category: #TusLibros stamp: 'VPM 11/3/2019 13:57:57'!
+Object subclass: #Checkout
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CheckoutTest category: #TusLibros stamp: 'VPM 11/3/2019 13:58:05'!
+TestCase subclass: #CheckoutTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CheckoutTest methodsFor: 'no messages' stamp: 'VPM 11/3/2019 13:59:19'!
+test01CheckoutCalculatesCorrectBalanceForACart! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:00:16'!
+test02CheckoutCalculatesCorrectBalanceForACart! !
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 14:01:00'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 14:01:34'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'VPM 11/3/2019 14:01:34'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 14:01:34'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 14:01:34'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'VPM 11/3/2019 14:01:34'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'VPM 11/3/2019 14:01:34'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 14:01:34'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 14:01:34'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'VPM 11/3/2019 14:01:34'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 14:01:43'!
+PASSED!
+
+(cart includes: self itemSellByTheStore)!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:51:24'!
+test01CheckoutHasSameCatalogAsCart! !
+
+!methodRemoval: CheckoutTest #test01CheckoutCalculatesCorrectBalanceForACart stamp: 'VPM 11/3/2019 14:51:26'!
+test01CheckoutCalculatesCorrectBalanceForACart!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:51:44'!
+test02CheckoutDoesNotHaveSameCatalogAsCart! !
+
+!methodRemoval: CheckoutTest #test02CheckoutCalculatesCorrectBalanceForACart stamp: 'VPM 11/3/2019 14:51:46'!
+test02CheckoutCalculatesCorrectBalanceForACart!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:52:01'!
+test03CheckoutCalculatesBalanceForCart! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:53:18'!
+catalog
+	^ Dictionary newFromPairs: { 'an item'. 50. 'another item'. 30 }! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:55:37' prior: 50780804!
+test01CheckoutHasSameCatalogAsCart
+
+	| cart checkout |
+	cart := Cart acceptingItemsOf: self catalog keys.
+	
+	checkout := Checkout withCatalog: self catalog.
+	
+	self assert: cart accepts! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:57:28' prior: 50780832!
+test01CheckoutHasSameCatalogAsCart
+
+	| cart checkout |
+	cart := Cart acceptingItemsOf: self catalog keys.
+	
+	checkout := Checkout withCatalog: self catalog.
+	
+	self assert: (checkout acceptsAllItemsOf: cart)! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:57:39' prior: 50780841!
+test01CheckoutHasSameCatalogAsCart
+
+	| cart checkout aCart aCheckout |
+	aCart := Cart acceptingItemsOf: self catalog keys.
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self assert: (checkout acceptsAllItemsOf: cart)! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:57:51' prior: 50780851!
+test01CheckoutHasSameCatalogAsCart
+
+	| aCart aCheckout |
+	aCart := Cart acceptingItemsOf: self catalog keys.
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self assert: (aCheckout acceptsAllItemsOf: aCart)! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:57:57' prior: 50780862!
+test01CheckoutHasSameCatalogAsCart
+
+	| aCart aCheckout |
+	aCart := Cart acceptingItemsOf: self catalog keys.
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self assert: (aCheckout acceptsAllItemsOf: aCart)
+	! !
+
+!testRun: #CheckoutTest #test01CheckoutHasSameCatalogAsCart stamp: 'VPM 11/3/2019 14:57:59'!
+ERROR!
+!Checkout class methodsFor: 'no messages' stamp: 'VPM 11/3/2019 14:58:28'!
+withCatalog: aCatalog
+	^ self new initializeWithCatalog: aCatalog! !
+
+!testRun: #CheckoutTest #test01CheckoutHasSameCatalogAsCart stamp: 'VPM 11/3/2019 14:58:35'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 14:58:35'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 14:58:35'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutHasSameCatalogAsCart stamp: 'VPM 11/3/2019 14:58:35'!
+ERROR!
+!Checkout methodsFor: 'no messages' stamp: 'VPM 11/3/2019 14:58:47'!
+initializeWithCatalog: aCatalog! !
+
+!testRun: #CheckoutTest #test01CheckoutHasSameCatalogAsCart stamp: 'VPM 11/3/2019 14:58:53'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 14:58:53'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 14:58:53'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutHasSameCatalogAsCart stamp: 'VPM 11/3/2019 14:58:53'!
+ERROR!
+
+Object subclass: #Checkout
+	instanceVariableNames: 'catalog'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Checkout category: #TusLibros stamp: 'VPM 11/3/2019 14:59:09'!
+Object subclass: #Checkout
+	instanceVariableNames: 'catalog'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:59:19' prior: 50780903!
+initializeWithCatalog: aCatalog
+	catalog := aCatalog ! !
+!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:59:49'!
+acceptsAllItemsOf: aCart
+	^ true! !
+
+!testRun: #CheckoutTest #test01CheckoutHasSameCatalogAsCart stamp: 'VPM 11/3/2019 14:59:54'!
+PASSED!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:00:58' prior: 50780813!
+test02CheckoutDoesNotHaveSameCatalogAsCart
+
+	| aCart aCheckout |
+	aCart := Cart acceptingItemsOf: (Set with: 'aaa').
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self deny: (aCheckout acceptsAllItemsOf: aCart)
+	! !
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 15:01:01'!
+FAILURE!
+!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:04:00' prior: 50780936!
+acceptsAllItemsOf: aCart
+	^ (catalog keys union: (aCart summary keys)) size = (catalog keys size)! !
+
+!testRun: #CheckoutTest #test01CheckoutHasSameCatalogAsCart stamp: 'VPM 11/3/2019 15:04:04'!
+ERROR!
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 15:04:04'!
+ERROR!
+
+!testRun: #CheckoutTest #test03CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:04:04'!
+PASSED!
+!CartTest methodsFor: 'support' stamp: 'VPM 11/3/2019 15:04:42' prior: 50780647!
+defaultCatalog
+	
+	^ self itemSellByTheStore! !
+!CartTest methodsFor: 'support' stamp: 'VPM 11/3/2019 15:04:53' prior: 50780974!
+defaultCatalog
+	
+	^ Array with: self itemSellByTheStore! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'VPM 11/3/2019 15:04:58'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 15:04:58'!
+ERROR!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 15:04:58'!
+ERROR!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'VPM 11/3/2019 15:04:58'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'VPM 11/3/2019 15:04:58'!
+ERROR!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 15:04:58'!
+ERROR!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 15:04:58'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'VPM 11/3/2019 15:04:58'!
+ERROR!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 15:05:02'!
+ERROR!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 15:05:25'!
+ERROR!
+!Cart methodsFor: 'assertions' stamp: 'VPM 11/3/2019 15:05:46' prior: 50780681!
+assertIsValidItem: anItem
+
+	(catalog includes: anItem) ifFalse: [ self error: self invalidItemErrorMessage ]! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'VPM 11/3/2019 15:05:50'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'VPM 11/3/2019 15:05:50'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 15:05:50'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 15:05:50'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 15:05:50'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'VPM 11/3/2019 15:05:50'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 15:05:50'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'VPM 11/3/2019 15:05:50'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'VPM 11/3/2019 15:06:31'!
+test09CartSummarizesCorrectly
+
+	| cart |
+	
+	cart := self createCart.
+	
+	cart add: 2 of: self itemSellByTheStore.
+	self assert: (cart occurrencesOf: self itemSellByTheStore) = 2! !
+!CartTest methodsFor: 'tests' stamp: 'VPM 11/3/2019 15:07:23' prior: 50781047!
+test09CartSummarizesCorrectly
+
+	| cart summary |
+	
+	cart := self createCart.
+	
+	cart add: 2 of: self itemSellByTheStore.
+	summary := cart summary.
+	self assert: (summary at: self itemSellByTheStore) = 2! !
+
+!testRun: #CartTest #test09CartSummarizesCorrectly stamp: 'VPM 11/3/2019 15:07:26'!
+ERROR!
+!Cart methodsFor: 'queries' stamp: 'VPM 11/3/2019 15:13:45'!
+summary
+	| aDictionary |
+	aDictionary := Dictionary new.
+	
+	items do: [:anItem | aDictionary at: anItem ifAbsentPut: 0.
+							aDictionary at: anItem put: (aDictionary at: anItem) + 1] 
+				! !
+!Cart methodsFor: 'queries' stamp: 'VPM 11/3/2019 15:13:58' prior: 50781068!
+summary
+	| aDictionary |
+	aDictionary := Dictionary new.
+	
+	items do: [:anItem | aDictionary at: anItem ifAbsentPut: 0.
+							aDictionary at: anItem put: (aDictionary at: anItem) + 1].
+	
+	^aDictionary ! !
+!Cart methodsFor: 'queries' stamp: 'VPM 11/3/2019 15:13:59' prior: 50781077!
+summary
+	| aDictionary |
+	aDictionary := Dictionary new.
+	
+	items do: [:anItem | aDictionary at: anItem ifAbsentPut: 0.
+							aDictionary at: anItem put: (aDictionary at: anItem) + 1].
+	
+	^aDictionary! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'VPM 11/3/2019 15:14:08'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 15:14:08'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 15:14:08'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'VPM 11/3/2019 15:14:08'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'VPM 11/3/2019 15:14:08'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 15:14:08'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 15:14:08'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'VPM 11/3/2019 15:14:08'!
+PASSED!
+
+!testRun: #CartTest #test09CartSummarizesCorrectly stamp: 'VPM 11/3/2019 15:14:08'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'VPM 11/3/2019 15:14:37'!
+test09CartSummarizesCorrectlyForOneItem
+
+	| cart summary |
+	
+	cart := self createCart.
+	
+	cart add: 2 of: self itemSellByTheStore.
+	summary := cart summary.
+	self assert: (summary at: self itemSellByTheStore) = 2! !
+
+!methodRemoval: CartTest #test09CartSummarizesCorrectly stamp: 'VPM 11/3/2019 15:14:39'!
+test09CartSummarizesCorrectly
+
+	| cart summary |
+	
+	cart := self createCart.
+	
+	cart add: 2 of: self itemSellByTheStore.
+	summary := cart summary.
+	self assert: (summary at: self itemSellByTheStore) = 2!
+!CartTest methodsFor: 'tests' stamp: 'VPM 11/3/2019 15:14:52'!
+test09CartSummarizesCorrectlyForCeroItems
+
+	| cart summary |
+	
+	cart := self createCart.
+	
+	summary := cart summary.
+	self assert: (summary at: self itemSellByTheStore) = 2! !
+
+!testRun: #CartTest #test09CartSummarizesCorrectlyForCeroItems stamp: 'VPM 11/3/2019 15:14:53'!
+ERROR!
+!CartTest methodsFor: 'tests' stamp: 'VPM 11/3/2019 15:15:09' prior: 50781141!
+test09CartSummarizesCorrectlyForCeroItems
+
+	| cart summary |
+	
+	cart := self createCart.
+	
+	summary := cart summary.
+	self assert: summary isEmpty! !
+
+!testRun: #CartTest #test09CartSummarizesCorrectlyForCeroItems stamp: 'VPM 11/3/2019 15:15:10'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'VPM 11/3/2019 15:15:10'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 15:15:10'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 15:15:10'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'VPM 11/3/2019 15:15:10'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'VPM 11/3/2019 15:15:10'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 15:15:10'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 15:15:10'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'VPM 11/3/2019 15:15:10'!
+PASSED!
+
+!testRun: #CartTest #test09CartSummarizesCorrectlyForCeroItems stamp: 'VPM 11/3/2019 15:15:10'!
+PASSED!
+
+!testRun: #CartTest #test09CartSummarizesCorrectlyForOneItem stamp: 'VPM 11/3/2019 15:15:10'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'VPM 11/3/2019 15:15:14'!
+test10CartSummarizesCorrectlyForCeroItems
+
+	| cart summary |
+	
+	cart := self createCart.
+	
+	summary := cart summary.
+	self assert: summary isEmpty! !
+!CartTest methodsFor: 'tests' stamp: 'VPM 11/3/2019 15:15:21'!
+test10CartSummarizesCorrectlyForOneItem
+
+	| cart summary |
+	
+	cart := self createCart.
+	
+	cart add: 2 of: self itemSellByTheStore.
+	summary := cart summary.
+	self assert: (summary at: self itemSellByTheStore) = 2! !
+
+!methodRemoval: CartTest #test10CartSummarizesCorrectlyForCeroItems stamp: 'VPM 11/3/2019 15:15:25'!
+test10CartSummarizesCorrectlyForCeroItems
+
+	| cart summary |
+	
+	cart := self createCart.
+	
+	summary := cart summary.
+	self assert: summary isEmpty!
+
+!methodRemoval: CartTest #test09CartSummarizesCorrectlyForOneItem stamp: 'VPM 11/3/2019 15:15:27'!
+test09CartSummarizesCorrectlyForOneItem
+
+	| cart summary |
+	
+	cart := self createCart.
+	
+	cart add: 2 of: self itemSellByTheStore.
+	summary := cart summary.
+	self assert: (summary at: self itemSellByTheStore) = 2!
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 15:17:48'!
+FAILURE!
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 15:17:48'!
+FAILURE!
+
+!testRun: #CheckoutTest #test01CheckoutHasSameCatalogAsCart stamp: 'VPM 11/3/2019 15:18:02'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 15:18:02'!
+FAILURE!
+
+!testRun: #CheckoutTest #test03CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:18:02'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 15:18:02'!
+FAILURE!
+
+!testRun: #CheckoutTest #test01CheckoutHasSameCatalogAsCart stamp: 'VPM 11/3/2019 15:18:31'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 15:18:31'!
+FAILURE!
+
+!testRun: #CheckoutTest #test03CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:18:31'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 15:18:31'!
+FAILURE!
+!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:20:33' prior: 50780958!
+acceptsAllItemsOf: aCart
+	^ catalog keys includesAllOf: (aCart summary keys)! !
+
+!testRun: #CheckoutTest #test01CheckoutHasSameCatalogAsCart stamp: 'VPM 11/3/2019 15:20:34'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 15:20:34'!
+FAILURE!
+
+!testRun: #CheckoutTest #test03CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:20:34'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 15:20:34'!
+FAILURE!
+
+catalog keys!
+
+aCart summary keys!
+
+aCart summary!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:21:41' prior: 50780944!
+test02CheckoutDoesNotHaveSameCatalogAsCart
+
+	| aCart aCheckout |
+	aCart := Cart acceptingItemsOf: (Set with: 'aaa').
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	aCart add: 'aaa'.
+	
+	self deny: (aCheckout acceptsAllItemsOf: aCart)
+	! !
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 15:21:51'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CheckoutHasSameCatalogAsCart stamp: 'VPM 11/3/2019 15:21:51'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 15:21:51'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:21:51'!
+PASSED!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:22:13'!
+test01CartHasAllItemsInCart
+
+	| aCart aCheckout |
+	aCart := Cart acceptingItemsOf: self catalog keys.
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self assert: (aCheckout acceptsAllItemsOf: aCart)
+	! !
+
+!methodRemoval: CheckoutTest #test01CheckoutHasSameCatalogAsCart stamp: 'VPM 11/3/2019 15:22:16'!
+test01CheckoutHasSameCatalogAsCart
+
+	| aCart aCheckout |
+	aCart := Cart acceptingItemsOf: self catalog keys.
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self assert: (aCheckout acceptsAllItemsOf: aCart)
+	!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:22:35'!
+test02CartHasItemsNotInCheckoutsCatalog
+
+	| aCart aCheckout |
+	aCart := Cart acceptingItemsOf: (Set with: 'aaa').
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	aCart add: 'aaa'.
+	
+	self deny: (aCheckout acceptsAllItemsOf: aCart)
+	! !
+
+!methodRemoval: CheckoutTest #test02CheckoutDoesNotHaveSameCatalogAsCart stamp: 'VPM 11/3/2019 15:22:42'!
+test02CheckoutDoesNotHaveSameCatalogAsCart
+
+	| aCart aCheckout |
+	aCart := Cart acceptingItemsOf: (Set with: 'aaa').
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	aCart add: 'aaa'.
+	
+	self deny: (aCheckout acceptsAllItemsOf: aCart)
+	!
+!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:24:28'!
+balanceFor: aCart
+	(self acceptsAllItemsOf: aCart) ifFalse: [ self error: self itemsNotInCatalogError ].
+	
+	! !
+!CartTest methodsFor: 'tests' stamp: 'VPM 11/3/2019 15:26:57'!
+test11CartSummarizesCorrectlyForTwoItems
+
+	| cart summary |
+	
+	cart := Cart acceptingItemsOf: (Set with: self itemSellByTheStore with: self itemNotSellByTheStore).
+	
+	cart add: 2 of: self itemSellByTheStore.
+	cart add: 1 of: self itemNotSellByTheStore.
+	cart add: 1 of: self itemSellByTheStore.
+	
+	summary := cart summary.
+	
+	self assert: (summary at: self itemSellByTheStore) = 3.
+	self assert: (summary at: self itemNotSellByTheStore) = 1.
+	self assert: (summary size) = 2! !
+
+!testRun: #CartTest #test11CartSummarizesCorrectlyForTwoItems stamp: 'VPM 11/3/2019 15:26:58'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'VPM 11/3/2019 15:26:58'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 15:26:58'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 15:26:58'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'VPM 11/3/2019 15:26:58'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'VPM 11/3/2019 15:26:58'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 15:26:58'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 15:26:58'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'VPM 11/3/2019 15:26:58'!
+PASSED!
+
+!testRun: #CartTest #test09CartSummarizesCorrectlyForCeroItems stamp: 'VPM 11/3/2019 15:26:58'!
+PASSED!
+
+!testRun: #CartTest #test10CartSummarizesCorrectlyForOneItem stamp: 'VPM 11/3/2019 15:26:58'!
+PASSED!
+
+!testRun: #CartTest #test11CartSummarizesCorrectlyForTwoItems stamp: 'VPM 11/3/2019 15:26:58'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'VPM 11/3/2019 15:27:22' prior: 50781203!
+test10CartSummarizesCorrectlyForOneItem
+
+	| cart summary |
+	
+	cart := self createCart.
+	
+	cart add: 2 of: self itemSellByTheStore.
+	summary := cart summary.
+	
+	self assert: (summary at: self itemSellByTheStore) = 2.
+	self assert: (summary size) = 1! !
+
+!testRun: #CartTest #test10CartSummarizesCorrectlyForOneItem stamp: 'VPM 11/3/2019 15:27:22'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'VPM 11/3/2019 15:27:22'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'VPM 11/3/2019 15:27:22'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'VPM 11/3/2019 15:27:22'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'VPM 11/3/2019 15:27:22'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'VPM 11/3/2019 15:27:22'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'VPM 11/3/2019 15:27:22'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'VPM 11/3/2019 15:27:22'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'VPM 11/3/2019 15:27:22'!
+PASSED!
+
+!testRun: #CartTest #test09CartSummarizesCorrectlyForCeroItems stamp: 'VPM 11/3/2019 15:27:22'!
+PASSED!
+
+!testRun: #CartTest #test10CartSummarizesCorrectlyForOneItem stamp: 'VPM 11/3/2019 15:27:22'!
+PASSED!
+
+!testRun: #CartTest #test11CartSummarizesCorrectlyForTwoItems stamp: 'VPM 11/3/2019 15:27:22'!
+PASSED!
+!CartTest methodsFor: 'tests' stamp: 'VPM 11/3/2019 15:27:30' prior: 50781153!
+test09CartSummarizesCorrectlyForCeroItems
+
+	| cart summary |
+	
+	cart := self createCart.
+	
+	summary := cart summary.
+	
+	self assert: summary isEmpty! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:31:06'!
+test04CheckoutCalculatesBalanceForCart
+
+	| aCart aCheckout items |
+	items := self catalog keys.
+	aCart := Cart acceptingItemsOf: items.
+	
+	aCart add: 2 of: (items at: 1).
+	aCart add: 1 of: (items at: 2).
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self assert: (aCheckout balanceFor: aCart) = 130! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:31:13' prior: 50781470!
+test04CheckoutCalculatesBalanceForCart
+
+	| aCart aCheckout items |
+	
+	items := self catalog keys.
+	aCart := Cart acceptingItemsOf: items.
+	
+	aCart add: 2 of: (items at: 1).
+	aCart add: 1 of: (items at: 2).
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self assert: (aCheckout balanceFor: aCart) = 130! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:36:04'!
+test03CheckoutCannotCalculateBalanceForCartWithUnknownItems
+	
+	| aCart aCheckout |
+	aCart := Cart acceptingItemsOf: (Set with: 'aa').
+	
+	aCart add: 1 of: 'aa'.
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self should: [ aCheckout balanceFor: aCart ]
+		raise: Error - MessageNotUnderstood 
+		withMessageText: aCheckout! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:36:28' prior: 50781496!
+test03CheckoutCannotCalculateBalanceForCartWithUnknownItems
+	
+	| aCart aCheckout |
+	aCart := Cart acceptingItemsOf: (Set with: 'aa').
+	
+	aCart add: 1 of: 'aa'.
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self should: [ aCheckout balanceFor: aCart ]
+		raise: Error - MessageNotUnderstood 
+		withMessageText: aCheckout itemsNotInCatalogError! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:36:33' prior: 50781510!
+test03CheckoutCannotCalculateBalanceForCartWithUnknownItems
+	
+	| aCart aCheckout |
+	aCart := Cart acceptingItemsOf: (Set with: 'aa').
+	
+	aCart add: 1 of: 'aa'.
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self should: [ aCheckout balanceFor: aCart ]
+		raise: Error - MessageNotUnderstood
+		withMessageText: aCheckout itemsNotInCatalogError! !
+
+!methodRemoval: CheckoutTest #test03CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:36:35'!
+test03CheckoutCalculatesBalanceForCart!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:36:42' prior: 50781525!
+test03CheckoutCannotCalculateBalanceForCartWithUnknownItems
+	
+	| aCart aCheckout |
+	aCart := Cart acceptingItemsOf: (Set with: 'aa').
+	
+	aCart add: 1 of: 'aa'.
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self should: [ aCheckout balanceFor: aCart ]
+		raise: Error - MessageNotUnderstood
+		withMessageText: aCheckout itemsNotInCatalogError! !
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:36:42'!
+ERROR!
+!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:37:13'!
+itemsNotInCatalogError
+	^ 'Items in cart not found in catalog'! !
+
+!testRun: #CheckoutTest #test01CartHasAllItemsInCart stamp: 'VPM 11/3/2019 15:37:17'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CartHasItemsNotInCheckoutsCatalog stamp: 'VPM 11/3/2019 15:37:17'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:37:17'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:37:17'!
+FAILURE!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:37:17'!
+FAILURE!
+
+d := Dictionary  new.!
+
+d at: 'aa' put: 2.!
+
+d collect: [:asocc| asocc ]!
+
+d collect: [:asocc| asocc first ]!
+
+d inject: 0 into:  [:a :b| a+ b value ]!
+
+d inject: 0 into:  [:a :b| a+ b key ]!
+!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:42:58' prior: 50781351!
+balanceFor: aCart
+	(self acceptsAllItemsOf: aCart) ifFalse: [ self error: self itemsNotInCatalogError ].
+	^ aCart summary inject: 0 into: [ :a :b | a + ((catalog at: b key) * b value)]
+	! !
+
+!testRun: #CheckoutTest #test01CartHasAllItemsInCart stamp: 'VPM 11/3/2019 15:43:00'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CartHasItemsNotInCheckoutsCatalog stamp: 'VPM 11/3/2019 15:43:00'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:43:00'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:43:00'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:43:00'!
+ERROR!
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:43:14'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CartHasAllItemsInCart stamp: 'VPM 11/3/2019 15:43:14'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CartHasItemsNotInCheckoutsCatalog stamp: 'VPM 11/3/2019 15:43:14'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:43:14'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:43:14'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:43:14'!
+ERROR!
+!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:43:30' prior: 50781590!
+balanceFor: aCart
+	(self acceptsAllItemsOf: aCart) ifFalse: [ self error: self itemsNotInCatalogError ].
+	^ aCart summary inject: 0 into: [ :a :b | a + ((catalog at: (b key)) * b value)]
+	! !
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:43:36'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:43:40'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:43:40'!
+ERROR!
+
+d inject: 'a' into:  [:a :b| a, b key ]!
+
+d inject: 'a' into:  [:a :b| b ]!
+
+a := 1.!
+
+a += 2.!
+!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:46:24' prior: 50781637!
+balanceFor: aCart
+	| balance |
+	(self acceptsAllItemsOf: aCart) ifFalse: [ self error: self itemsNotInCatalogError ].
+	balance := 0.
+	aCart do: [ :assoc | balance :=  balance + ((catalog at: assoc key) * assoc value)].
+	^ balance
+	! !
+
+!testRun: #CheckoutTest #test01CartHasAllItemsInCart stamp: 'VPM 11/3/2019 15:46:26'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CartHasItemsNotInCheckoutsCatalog stamp: 'VPM 11/3/2019 15:46:26'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:46:26'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:46:26'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:46:26'!
+ERROR!
+!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:46:35' prior: 50781660!
+balanceFor: aCart
+	| balance |
+	(self acceptsAllItemsOf: aCart) ifFalse: [ self error: self itemsNotInCatalogError ].
+	balance := 0.
+	aCart summary do: [ :assoc | balance :=  balance + ((catalog at: assoc key) * assoc value)].
+	^ balance
+	! !
+
+!testRun: #CheckoutTest #test01CartHasAllItemsInCart stamp: 'VPM 11/3/2019 15:46:38'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CartHasItemsNotInCheckoutsCatalog stamp: 'VPM 11/3/2019 15:46:38'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:46:38'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:46:38'!
+ERROR!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:46:38'!
+ERROR!
+!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:47:14' prior: 50781688!
+balanceFor: aCart
+	| balance |
+	(self acceptsAllItemsOf: aCart) ifFalse: [ self error: self itemsNotInCatalogError ].
+	balance := 0.
+	aCart summary associationsDo: [ :assoc | balance :=  balance + ((catalog at: assoc key) * assoc value)].
+	^ balance
+	! !
+
+!testRun: #CheckoutTest #test01CartHasAllItemsInCart stamp: 'VPM 11/3/2019 15:47:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CartHasItemsNotInCheckoutsCatalog stamp: 'VPM 11/3/2019 15:47:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:47:16'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:47:16'!
+FAILURE!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:47:16'!
+FAILURE!
+
+(aCheckout balanceFor: aCart)!
+
+(items at: 1)!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:49:12' prior: 50781483!
+test04CheckoutCalculatesBalanceForCart
+
+	| aCart aCheckout items |
+	
+	items := self catalog keys.
+	aCart := Cart acceptingItemsOf: items.
+	
+	aCart add: 2 of: 'an item'.
+	aCart add: 1 of: 'another item'..
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self assert: (aCheckout balanceFor: aCart) = 130! !
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:49:14' prior: 50781746!
+test04CheckoutCalculatesBalanceForCart
+
+	| aCart aCheckout items |
+	
+	items := self catalog keys.
+	aCart := Cart acceptingItemsOf: items.
+	
+	aCart add: 2 of: 'an item'.
+	aCart add: 1 of: 'another item'.
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	self assert: (aCheckout balanceFor: aCart) = 130! !
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:49:14'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CartHasAllItemsInCart stamp: 'VPM 11/3/2019 15:49:14'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CartHasItemsNotInCheckoutsCatalog stamp: 'VPM 11/3/2019 15:49:14'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:49:14'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:49:14'!
+PASSED!
+
+----QUIT----(3 November 2019 15:49:26) CuisUniversity-3938.image priorSource: 14319118!
+
+----STARTUP---- (3 November 2019 15:50:41) as /home/valchu/Downloads/linux64/CuisUniversity-3938.image!
+
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:55:18'!
+test05CheckoutBuysCartWithAValidCard
+
+	| aCart aCheckout items aCard |
+	
+	items := self catalog keys.
+	aCart := Cart acceptingItemsOf: items.
+	
+	aCart add: 2 of: 'an item'.
+	aCart add: 1 of: 'another item'.
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	aCard := 0.
+	
+	self shouldNotFail: [ aCheckout buy: aCart with: aCard ]! !
+
+!testRun: #CheckoutTest #test01CartHasAllItemsInCart stamp: 'VPM 11/3/2019 15:55:30'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CartHasItemsNotInCheckoutsCatalog stamp: 'VPM 11/3/2019 15:55:30'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:55:30'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:55:30'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutBuysCartWithAValidCard stamp: 'VPM 11/3/2019 15:55:30'!
+ERROR!
+
+!testRun: #CheckoutTest #test05CheckoutBuysCartWithAValidCard stamp: 'VPM 11/3/2019 15:55:30'!
+ERROR!
+!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:56:34'!
+buy: aCart with: aCard
+
+	| balance |
+	balance := self balanceFor: aCart.
+	
+	self debit: balance fromCard: aCard.! !
+
+!testRun: #CheckoutTest #test01CartHasAllItemsInCart stamp: 'VPM 11/3/2019 15:56:42'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CartHasItemsNotInCheckoutsCatalog stamp: 'VPM 11/3/2019 15:56:42'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:56:42'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:56:42'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutBuysCartWithAValidCard stamp: 'VPM 11/3/2019 15:56:42'!
+ERROR!
+
+!testRun: #CheckoutTest #test05CheckoutBuysCartWithAValidCard stamp: 'VPM 11/3/2019 15:56:42'!
+ERROR!
+!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:57:14'!
+debit: anAmmount fromCard: aCard
+
+	^ 'does something'! !
+
+!testRun: #CheckoutTest #test01CartHasAllItemsInCart stamp: 'VPM 11/3/2019 15:57:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CartHasItemsNotInCheckoutsCatalog stamp: 'VPM 11/3/2019 15:57:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:57:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:57:25'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutBuysCartWithAValidCard stamp: 'VPM 11/3/2019 15:57:25'!
+ERROR!
+
+!testRun: #CheckoutTest #test05CheckoutBuysCartWithAValidCard stamp: 'VPM 11/3/2019 15:57:25'!
+ERROR!
+
+!testRun: #CheckoutTest #test05CheckoutBuysCartWithAValidCard stamp: 'VPM 11/3/2019 15:57:48'!
+ERROR!
+!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:58:06' prior: 50781795!
+test05CheckoutBuysCartWithAValidCard
+
+	| aCart aCheckout items aCard |
+	
+	items := self catalog keys.
+	aCart := Cart acceptingItemsOf: items.
+	
+	aCart add: 2 of: 'an item'.
+	aCart add: 1 of: 'another item'.
+	
+	aCheckout := Checkout withCatalog: self catalog.
+	
+	aCard := 0.
+	
+	self shouldntFail: [ aCheckout buy: aCart with: aCard ]! !
+
+!testRun: #CheckoutTest #test05CheckoutBuysCartWithAValidCard stamp: 'VPM 11/3/2019 15:58:08'!
+PASSED!
+
+!testRun: #CheckoutTest #test01CartHasAllItemsInCart stamp: 'VPM 11/3/2019 15:58:08'!
+PASSED!
+
+!testRun: #CheckoutTest #test02CartHasItemsNotInCheckoutsCatalog stamp: 'VPM 11/3/2019 15:58:08'!
+PASSED!
+
+!testRun: #CheckoutTest #test03CheckoutCannotCalculateBalanceForCartWithUnknownItems stamp: 'VPM 11/3/2019 15:58:08'!
+PASSED!
+
+!testRun: #CheckoutTest #test04CheckoutCalculatesBalanceForCart stamp: 'VPM 11/3/2019 15:58:08'!
+PASSED!
+
+!testRun: #CheckoutTest #test05CheckoutBuysCartWithAValidCard stamp: 'VPM 11/3/2019 15:58:08'!
+PASSED!
+
+----QUIT----(3 November 2019 15:58:28) CuisUniversity-3938.image priorSource: 14404402!
