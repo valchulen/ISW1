@@ -1,4 +1,72 @@
-!classDefinition: #CartTest category: #TusLibros stamp: 'VPM 11/3/2019 15:58:14'!
+!classDefinition: #CardTest category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+TestCase subclass: #CardTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!CardTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:05:25'!
+test01CreatesCardCorrectly
+	| card |
+	card := Card number: 1234567812345678 
+					holder: 'Guidito MethodObject' 
+					expires: (GregorianMonthOfYear year: 2000 month: January).
+					
+	self assert: card number equals: 1234567812345678.
+	self assert: card expiration equals: (GregorianMonthOfYear year: 2000 month: January).
+	self assert: card holderName equals: 'Guidito MethodObject'.! !
+
+!CardTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:09:02'!
+test02CannotCreateCardWithLessThan16Digits
+	
+	self should: [ Card number: 123456781234567
+					holder: 'Guidito MethodObject' 
+					expires: (GregorianMonthOfYear year: 2000 month: January) ]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Card messageInvalidCardNumber.! !
+
+!CardTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:09:08'!
+test03CannotCreateCardWithMoreThan16Digits
+	
+	self should: [ Card number: 12345678123456789
+					holder: 'Guidito MethodObject' 
+					expires: (GregorianMonthOfYear year: 2000 month: January) ]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Card messageInvalidCardNumber.! !
+
+!CardTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:47:22'!
+test04IsNotExpiredWhenSameMonth
+	
+	| card |
+	
+	card := Card number: 1234567812345678
+					holder: 'Guidito MethodObject' 
+					expires: (GregorianMonthOfYear yearNumber: 2000 month: January) .
+					
+	self deny: (card isExpiredOn: (FixedGregorianDate yearNumber: 2000 month: January dayNumber: 1)).! !
+
+!CardTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:47:13'!
+test05IsNotExpiredWhenNotExpiredByAMonth
+	
+	| card |
+	card := Card number: 1234567812345678
+					holder: 'Guidito MethodObject' 
+					expires: (GregorianMonthOfYear yearNumber: 2000 month: January) .
+					
+	self deny: (card isExpiredOn: (FixedGregorianDate yearNumber: 1999 month: December dayNumber: 1)).! !
+
+!CardTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:46:53'!
+test06IsExpiredWhenExpiredByAMonth
+	
+	| card |
+	card := Card number: 1234567812345678
+					holder: 'Guidito MethodObject' 
+					expires: (GregorianMonthOfYear yearNumber: 2000 month: January) .
+					
+	self assert: (card isExpiredOn: (FixedGregorianDate yearNumber: 2000 month: February dayNumber: 1)).! !
+
+
+!classDefinition: #CartTest category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
 TestCase subclass: #CartTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -115,12 +183,12 @@ test10CartSummarizesCorrectlyForOneItem
 	self assert: (summary at: self itemSellByTheStore) = 2.
 	self assert: (summary size) = 1! !
 
-!CartTest methodsFor: 'tests' stamp: 'VPM 11/3/2019 15:26:57'!
+!CartTest methodsFor: 'tests' stamp: 'sjd 11/4/2019 19:04:10'!
 test11CartSummarizesCorrectlyForTwoItems
 
 	| cart summary |
 	
-	cart := Cart acceptingItemsOf: (Set with: self itemSellByTheStore with: self itemNotSellByTheStore).
+	cart := Cart acceptingItemsOf: (Dictionary newFromPairs: { self itemSellByTheStore. 50. self itemNotSellByTheStore. 30 }).
 	
 	cart add: 2 of: self itemSellByTheStore.
 	cart add: 1 of: self itemNotSellByTheStore.
@@ -132,16 +200,37 @@ test11CartSummarizesCorrectlyForTwoItems
 	self assert: (summary at: self itemNotSellByTheStore) = 1.
 	self assert: (summary size) = 2! !
 
+!CartTest methodsFor: 'tests' stamp: 'sjd 11/4/2019 19:08:45'!
+test12CartCalculatesBalanceForCeroItems
+	| cart |
+	
+	cart := Cart acceptingItemsOf: (Dictionary newFromPairs: { self itemSellByTheStore. 50. self itemNotSellByTheStore. 30 }).
+	
+	self assert: (cart balance) = 0! !
+
+!CartTest methodsFor: 'tests' stamp: 'sjd 11/4/2019 19:08:27'!
+test13CartCalculatesBalanceCorrectlyForTwoItems
+
+	| cart |
+	
+	cart := Cart acceptingItemsOf: (Dictionary newFromPairs: { self itemSellByTheStore. 50. self itemNotSellByTheStore. 30 }).
+	
+	cart add: 2 of: self itemSellByTheStore.
+	cart add: 1 of: self itemNotSellByTheStore.
+	cart add: 1 of: self itemSellByTheStore.
+	
+	self assert: (cart balance) = 180! !
+
 
 !CartTest methodsFor: 'support' stamp: 'HernanWilkinson 6/17/2013 17:48'!
 createCart
 	
 	^Cart acceptingItemsOf: self defaultCatalog! !
 
-!CartTest methodsFor: 'support' stamp: 'VPM 11/3/2019 15:04:53'!
+!CartTest methodsFor: 'support' stamp: 'sjd 11/4/2019 19:02:13'!
 defaultCatalog
 	
-	^ Array with: self itemSellByTheStore! !
+	^ Dictionary newFromPairs: { self itemSellByTheStore. 50 }! !
 
 !CartTest methodsFor: 'support' stamp: 'VPM 11/3/2019 13:55:01'!
 itemNotSellByTheStore
@@ -154,89 +243,126 @@ itemSellByTheStore
 	^ 'validBook'! !
 
 
-!classDefinition: #CheckoutTest category: #TusLibros stamp: 'VPM 11/3/2019 15:58:14'!
-TestCase subclass: #CheckoutTest
+!classDefinition: #CashierTest category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+TestCase subclass: #CashierTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:53:18'!
-catalog
-	^ Dictionary newFromPairs: { 'an item'. 50. 'another item'. 30 }! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:50:41'!
+aValidCard
+	^ Card number: 1234567812345678
+			holder: 'Guido Objeto metodo'
+			expires: (GregorianMonthOfYear yearNumber: 2021 month: January)! !
 
-!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:22:13'!
-test01CartHasAllItemsInCart
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:51:07'!
+anExpiredCard
+	^ Card number: 1234567812345678
+			holder: 'Guido Objeto metodo'
+			expires: (GregorianMonthOfYear yearNumber: 2000 month: January)! !
 
-	| aCart aCheckout |
-	aCart := Cart acceptingItemsOf: self catalog keys.
-	
-	aCheckout := Checkout withCatalog: self catalog.
-	
-	self assert: (aCheckout acceptsAllItemsOf: aCart)
-	! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:54:35'!
+test01CashierCannotCheckoutOnEmptyCart
 
-!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:22:35'!
-test02CartHasItemsNotInCheckoutsCatalog
+	| aCard aCart aCashier aLedger |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	
+	self should: [ aCashier checkout: aCart with: aCard onDay: self today ]
+		raise: Error - MessageNotUnderstood 
+		withMessageText: Cashier messageEmptyCart.
+	self assert: aCashier ammountCharged equals: 0.
+	self assert: aLedger isEmpty.
+		! !
 
-	| aCart aCheckout |
-	aCart := Cart acceptingItemsOf: (Set with: 'aaa').
-	
-	aCheckout := Checkout withCatalog: self catalog.
-	
-	aCart add: 'aaa'.
-	
-	self deny: (aCheckout acceptsAllItemsOf: aCart)
-	! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:54:11'!
+test02CashierCannotCheckoutOnExpiredCard
 
-!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:36:42'!
-test03CheckoutCannotCalculateBalanceForCartWithUnknownItems
+	| aCard aCart aCashier aLedger |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aCart add: 'a'.
 	
-	| aCart aCheckout |
-	aCart := Cart acceptingItemsOf: (Set with: 'aa').
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self anExpiredCard.
 	
-	aCart add: 1 of: 'aa'.
-	
-	aCheckout := Checkout withCatalog: self catalog.
-	
-	self should: [ aCheckout balanceFor: aCart ]
-		raise: Error - MessageNotUnderstood
-		withMessageText: aCheckout itemsNotInCatalogError! !
+	self should: [ aCashier checkout: aCart with: aCard onDay: self today ]
+		raise: Error - MessageNotUnderstood 
+		withMessageText: Cashier messageExpiredCard.
+	self assert: aCashier ammountCharged equals: 0.
+	self assert: aLedger isEmpty.
+		! !
 
-!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:49:14'!
-test04CheckoutCalculatesBalanceForCart
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:55:02'!
+test03CashierChecksOutOneCartForValidCart
 
-	| aCart aCheckout items |
+	| aCard aCart aCashier aLedger |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aCart add: 'a'.
 	
-	items := self catalog keys.
-	aCart := Cart acceptingItemsOf: items.
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	aCashier checkout: aCart with: aCard onDay: self today.
 	
-	aCart add: 2 of: 'an item'.
-	aCart add: 1 of: 'another item'.
-	
-	aCheckout := Checkout withCatalog: self catalog.
-	
-	self assert: (aCheckout balanceFor: aCart) = 130! !
+	self assert: aCashier ammountCharged equals: 10.
+	self assert: aLedger isEmpty.
+		! !
 
-!CheckoutTest methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:58:06'!
-test05CheckoutBuysCartWithAValidCard
-
-	| aCart aCheckout items aCard |
-	
-	items := self catalog keys.
-	aCart := Cart acceptingItemsOf: items.
-	
-	aCart add: 2 of: 'an item'.
-	aCart add: 1 of: 'another item'.
-	
-	aCheckout := Checkout withCatalog: self catalog.
-	
-	aCard := 0.
-	
-	self shouldntFail: [ aCheckout buy: aCart with: aCard ]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:54:21'!
+today
+	^ FixedGregorianDate yearNumber: 2019 month: November dayNumber: 4.! !
 
 
-!classDefinition: #Cart category: #TusLibros stamp: 'VPM 11/3/2019 15:58:14'!
+!classDefinition: #Card category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+Object subclass: #Card
+	instanceVariableNames: 'number holder expiration'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!Card methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:06:01'!
+expiration
+	^ expiration ! !
+
+!Card methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:05:54'!
+holderName
+	^ holder! !
+
+!Card methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:11:46'!
+initializeWithNumber: aNumber holder: aName expires: aMonthYear
+	(aNumber numberOfDigitsInBase: 10) = 16 ifFalse: [ self error: Card messageInvalidCardNumber ].
+	holder := aName.
+	number := aNumber.
+	expiration := aMonthYear.! !
+
+!Card methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:33:30'!
+isExpiredOn: aGregorianDate
+	^ expiration < aGregorianDate monthOfYear! !
+
+!Card methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:05:45'!
+number
+	^ number ! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Card class' category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+Card class
+	instanceVariableNames: ''!
+
+!Card class methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:08:26'!
+messageInvalidCardNumber
+	^ 'Wrong Card number'! !
+
+!Card class methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:00:20'!
+number: aNumber holder: aName expires: aMonthYear
+	^ self new initializeWithNumber: aNumber holder: aName expires: aMonthYear! !
+
+
+!classDefinition: #Cart category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
 Object subclass: #Cart
 	instanceVariableNames: 'catalog items'
 	classVariableNames: ''
@@ -254,10 +380,10 @@ invalidQuantityErrorMessage
 	^'Invalid number of items'! !
 
 
-!Cart methodsFor: 'assertions' stamp: 'VPM 11/3/2019 15:05:46'!
+!Cart methodsFor: 'assertions' stamp: 'sjd 11/4/2019 19:03:06'!
 assertIsValidItem: anItem
 
-	(catalog includes: anItem) ifFalse: [ self error: self invalidItemErrorMessage ]! !
+	catalog at: anItem ifAbsent: [ self error: self invalidItemErrorMessage ]! !
 
 !Cart methodsFor: 'assertions' stamp: 'HernanWilkinson 6/17/2013 17:51'!
 assertIsValidQuantity: aQuantity
@@ -271,6 +397,14 @@ initializeAcceptingItemsOf: aCatalog
 	catalog := aCatalog.
 	items := OrderedCollection new.! !
 
+
+!Cart methodsFor: 'queries' stamp: 'sjd 11/4/2019 19:09:30'!
+balance
+	| balance |
+	
+	balance := 0.
+	self summary associationsDo: [ :assoc | balance :=  balance + ((catalog at: assoc key) * assoc value)].
+	^ balance! !
 
 !Cart methodsFor: 'queries' stamp: 'HernanWilkinson 6/17/2013 17:45'!
 occurrencesOf: anItem
@@ -299,9 +433,10 @@ isEmpty
 	^items isEmpty ! !
 
 
-!Cart methodsFor: 'adding' stamp: 'HernanWilkinson 6/17/2013 17:44'!
+!Cart methodsFor: 'adding' stamp: 'sjd 11/4/2019 19:01:00'!
 add: anItem
-
+	self assertIsValidItem: anItem.
+	
 	^ self add: 1 of: anItem ! !
 
 !Cart methodsFor: 'adding' stamp: 'HernanWilkinson 6/17/2013 17:51'!
@@ -314,7 +449,7 @@ add: aQuantity of: anItem
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cart class' category: #TusLibros stamp: 'VPM 11/3/2019 15:58:14'!
+!classDefinition: 'Cart class' category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
 Cart class
 	instanceVariableNames: ''!
 
@@ -324,53 +459,43 @@ acceptingItemsOf: aCatalog
 	^self new initializeAcceptingItemsOf: aCatalog ! !
 
 
-!classDefinition: #Checkout category: #TusLibros stamp: 'VPM 11/3/2019 15:58:14'!
-Object subclass: #Checkout
-	instanceVariableNames: 'catalog'
+!classDefinition: #Cashier category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+Object subclass: #Cashier
+	instanceVariableNames: 'ledger ammountCharged'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:20:33'!
-acceptsAllItemsOf: aCart
-	^ catalog keys includesAllOf: (aCart summary keys)! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 19:52:49'!
+ammountCharged
+	^ ammountCharged! !
 
-!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:47:14'!
-balanceFor: aCart
-	| balance |
-	(self acceptsAllItemsOf: aCart) ifFalse: [ self error: self itemsNotInCatalogError ].
-	balance := 0.
-	aCart summary associationsDo: [ :assoc | balance :=  balance + ((catalog at: assoc key) * assoc value)].
-	^ balance
-	! !
-
-!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:56:34'!
-buy: aCart with: aCard
-
-	| balance |
-	balance := self balanceFor: aCart.
+!Cashier methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:53:19'!
+checkout: aCart with: aCard onDay: aFixedDate
+	aCart isEmpty ifTrue: [ self error: Cashier messageEmptyCart ].
+	(aCard isExpiredOn: aFixedDate) ifTrue: [ self error: Cashier messageExpiredCard ].
 	
-	self debit: balance fromCard: aCard.! !
+	ammountCharged := aCart balance.! !
 
-!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:57:14'!
-debit: anAmmount fromCard: aCard
-
-	^ 'does something'! !
-
-!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:59:19'!
-initializeWithCatalog: aCatalog
-	catalog := aCatalog ! !
-
-!Checkout methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 15:37:13'!
-itemsNotInCatalogError
-	^ 'Items in cart not found in catalog'! !
+!Cashier methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 19:53:38'!
+initializeWithLedger: aLedger
+	ledger := aLedger.
+	ammountCharged := 0! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Checkout class' category: #TusLibros stamp: 'VPM 11/3/2019 15:58:14'!
-Checkout class
+!classDefinition: 'Cashier class' category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+Cashier class
 	instanceVariableNames: ''!
 
-!Checkout class methodsFor: 'as yet unclassified' stamp: 'VPM 11/3/2019 14:58:28'!
-withCatalog: aCatalog
-	^ self new initializeWithCatalog: aCatalog! !
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 19:19:59'!
+messageEmptyCart
+	^ 'Cannot purchase an empry cart'! !
+
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 19:32:38'!
+messageExpiredCard
+	^ 'Cannot use an expired card'! !
+
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 19:19:17'!
+withLedger: aLedger
+	^ self new initializeWithLedger: aLedger! !
