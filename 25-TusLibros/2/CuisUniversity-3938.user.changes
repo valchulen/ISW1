@@ -3577,3 +3577,568 @@ PASSED!
 PASSED!
 
 ----QUIT----(4 November 2019 21:04:52) CuisUniversity-3938.image priorSource: 14406968!
+
+----STARTUP---- (6 November 2019 17:21:13) as /home/glipina/Documents/linux64(3)/linux64/CuisUniversity-3938.image!
+
+
+!testRun: #CardTest #test01CreatesCardCorrectly stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CardTest #test02CannotCreateCardWithLessThan16Digits stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CardTest #test03CannotCreateCardWithMoreThan16Digits stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CardTest #test04IsNotExpiredWhenSameMonth stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CardTest #test05IsNotExpiredWhenNotExpiredByAMonth stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CardTest #test06IsExpiredWhenExpiredByAMonth stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CartTest #test09CartSummarizesCorrectlyForCeroItems stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CartTest #test10CartSummarizesCorrectlyForOneItem stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CartTest #test11CartSummarizesCorrectlyForTwoItems stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CartTest #test12CartCalculatesBalanceForCeroItems stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CartTest #test13CartCalculatesBalanceCorrectlyForTwoItems stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierCannotCheckoutOnEmptyCart stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCannotCheckoutOnExpiredCard stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 17:23:15'!
+PASSED!
+
+Object subclass: #DebitInterface
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #DebitInterface category: #TusLibros stamp: 'sjd 11/6/2019 17:31:05'!
+Object subclass: #DebitInterface
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 17:54:04' prior: 50784906!
+test03CashierChecksOutOneCartForValidCart
+
+	| aCard aCart aCashier aLedger mock |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aCart add: 'a'.
+	
+	mock := DebitInterface howToDebit: self correctDebit.
+	
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	aCashier checkout: aCart with: aCard onDay: self today.
+	
+	self assert: aCashier ammountCharged equals: 10.
+	self assert: aLedger isEmpty.
+		! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 17:54:58'!
+correctDebit
+	^ [ :aCard :aPrice ]! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 17:55:21' prior: 50785024!
+test03CashierChecksOutOneCartForValidCart
+
+	| aCard aCart aCashier aLedger mock |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aCart add: 'a'.
+	
+	mock := DebitInterface howToDebit: self correctDebit.
+	
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	aCashier checkout: aCart with: aCard onDay: self today onInterface: mock.
+	
+	self assert: aCashier ammountCharged equals: 10.
+	self assert: aLedger isEmpty.
+		! !
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 17:55:24'!
+ERROR!
+
+Object subclass: #DebitInterface
+	instanceVariableNames: 'howToDebitClosure'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #DebitInterface category: #TusLibros stamp: 'sjd 11/6/2019 17:56:00'!
+Object subclass: #DebitInterface
+	instanceVariableNames: 'howToDebitClosure'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!DebitInterface class methodsFor: 'no messages' stamp: 'sjd 11/6/2019 17:56:48'!
+howToDebit: aClosure
+	! !
+!DebitInterface class methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 17:57:18' prior: 50785081!
+howToDebit: aClosure
+	^ self new initializeWithHowToDebit: aClosure! !
+!DebitInterface methodsFor: 'no messages' stamp: 'sjd 11/6/2019 17:57:33'!
+initializeWithHowToDebit: aClosure
+	howToDebitClosure := aClosure! !
+
+!testRun: #CashierTest #test01CashierCannotCheckoutOnEmptyCart stamp: 'sjd 11/6/2019 17:59:32'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCannotCheckoutOnExpiredCard stamp: 'sjd 11/6/2019 17:59:32'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 17:59:32'!
+ERROR!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 17:59:32'!
+ERROR!
+!Cashier methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:02:05'!
+checkout: aCart with: aCard onDay: aFixedDate onInterface: aDebitInterface
+	| aBalance |
+	aCart isEmpty ifTrue: [ self error: Cashier messageEmptyCart ].
+	(aCard isExpiredOn: aFixedDate) ifTrue: [ self error: Cashier messageExpiredCard ].
+	
+	aBalance := aCart balance.
+	aDebitInterface debit: aBalance from: aCard.
+	
+	ammountCharged := aBalance.! !
+
+!testRun: #CashierTest #test01CashierCannotCheckoutOnEmptyCart stamp: 'sjd 11/6/2019 18:02:09'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCannotCheckoutOnExpiredCard stamp: 'sjd 11/6/2019 18:02:09'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 18:02:09'!
+ERROR!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 18:02:09'!
+ERROR!
+!DebitInterface methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:02:54'!
+debit: aBalance from: aCard
+	^ howToDebitClosure value: aCard value: aBalance ! !
+
+!testRun: #CashierTest #test01CashierCannotCheckoutOnEmptyCart stamp: 'sjd 11/6/2019 18:02:57'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCannotCheckoutOnExpiredCard stamp: 'sjd 11/6/2019 18:02:57'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 18:02:57'!
+PASSED!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:05:30'!
+test04CannotDebitFromCardWithoutFunds
+
+	| aCard aCart aCashier aLedger mock |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aCart add: 'a'.
+	
+	mock := DebitInterface howToDebit: self withoutTrailingBlanks.
+	
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	self should: [ aCashier checkout: aCart with: aCard onDay: self today onInterface: mock ]
+		 raise:  Error - MessageNotUnderstood.
+	
+	self assert: aCashier ammountCharged equals: 10.
+	self assert: aLedger isEmpty.
+		! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:05:41' prior: 50785152!
+test04CannotDebitFromCardWithoutFunds
+
+	| aCard aCart aCashier aLedger mock |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aCart add: 'a'.
+	
+	mock := DebitInterface howToDebit: self withoutFunds.
+	
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	self should: [ aCashier checkout: aCart with: aCard onDay: self today onInterface: mock ]
+		 raise:  Error - MessageNotUnderstood.
+	
+	self assert: aCashier ammountCharged equals: 10.
+	self assert: aLedger isEmpty.
+		! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:06:52'!
+withoutFunds
+	^ [ :aCard :aValue | self error: 'No hay fondos suficientes' ]! !
+
+!testRun: #CashierTest #test01CashierCannotCheckoutOnEmptyCart stamp: 'sjd 11/6/2019 18:06:55'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCannotCheckoutOnExpiredCard stamp: 'sjd 11/6/2019 18:06:55'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 18:06:55'!
+PASSED!
+
+!testRun: #CashierTest #test04CannotDebitFromCardWithoutFunds stamp: 'sjd 11/6/2019 18:06:55'!
+FAILURE!
+
+!testRun: #CashierTest #test04CannotDebitFromCardWithoutFunds stamp: 'sjd 11/6/2019 18:06:55'!
+FAILURE!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:07:04' prior: 50785173!
+test04CannotDebitFromCardWithoutFunds
+
+	| aCard aCart aCashier aLedger mock |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aCart add: 'a'.
+	
+	mock := DebitInterface howToDebit: self withoutFunds.
+	
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	self should: [ aCashier checkout: aCart with: aCard onDay: self today onInterface: mock ]
+		 raise:  Error - MessageNotUnderstood.
+	
+	self assert: aCashier ammountCharged equals: 0.
+	self assert: aLedger isEmpty.
+		! !
+
+!testRun: #CashierTest #test04CannotDebitFromCardWithoutFunds stamp: 'sjd 11/6/2019 18:07:06'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierCannotCheckoutOnEmptyCart stamp: 'sjd 11/6/2019 18:07:06'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCannotCheckoutOnExpiredCard stamp: 'sjd 11/6/2019 18:07:06'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 18:07:06'!
+PASSED!
+
+!testRun: #CashierTest #test04CannotDebitFromCardWithoutFunds stamp: 'sjd 11/6/2019 18:07:06'!
+PASSED!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:07:15' prior: 50785216!
+test04CannotDebitFromCardWithoutFunds
+
+	| aCard aCart aCashier aLedger mock |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aCart add: 'a'.
+	
+	mock := DebitInterface howToDebit: self withoutFunds.
+	
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	self should: [ aCashier checkout: aCart with: aCard onDay: self today onInterface: mock ]
+		 raise:  Error - MessageNotUnderstood.
+	
+	self assert: 0 equals: aCashier ammountCharged .
+	self assert: aLedger isEmpty.
+		! !
+
+!testRun: #CashierTest #test04CannotDebitFromCardWithoutFunds stamp: 'sjd 11/6/2019 18:07:20'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierCannotCheckoutOnEmptyCart stamp: 'sjd 11/6/2019 18:07:20'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCannotCheckoutOnExpiredCard stamp: 'sjd 11/6/2019 18:07:20'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 18:07:20'!
+PASSED!
+
+!testRun: #CashierTest #test04CannotDebitFromCardWithoutFunds stamp: 'sjd 11/6/2019 18:07:20'!
+PASSED!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:07:32' prior: 50785047!
+test03CashierChecksOutOneCartForValidCart
+
+	| aCard aCart aCashier aLedger mock |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aCart add: 'a'.
+	
+	mock := DebitInterface howToDebit: self correctDebit.
+	
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	aCashier checkout: aCart with: aCard onDay: self today onInterface: mock.
+	
+	self assert: 10 equals: aCashier ammountCharged .
+	self assert: aLedger isEmpty.
+		! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:07:33' prior: 50785290!
+test03CashierChecksOutOneCartForValidCart
+
+	| aCard aCart aCashier aLedger mock |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aCart add: 'a'.
+	
+	mock := DebitInterface howToDebit: self correctDebit.
+	
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	aCashier checkout: aCart with: aCard onDay: self today onInterface: mock.
+	
+	self assert: 10 equals: aCashier ammountCharged.
+	self assert: aLedger isEmpty.
+		! !
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 18:07:33'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierCannotCheckoutOnEmptyCart stamp: 'sjd 11/6/2019 18:07:33'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCannotCheckoutOnExpiredCard stamp: 'sjd 11/6/2019 18:07:33'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 18:07:33'!
+PASSED!
+
+!testRun: #CashierTest #test04CannotDebitFromCardWithoutFunds stamp: 'sjd 11/6/2019 18:07:33'!
+PASSED!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:07:54' prior: 50784828!
+test02CashierCannotCheckoutOnExpiredCard
+
+	| aCard aCart aCashier aLedger |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aCart add: 'a'.
+	
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self anExpiredCard.
+	
+	self should: [ aCashier checkout: aCart with: aCard onDay: self today ]
+		raise: Error - MessageNotUnderstood 
+		withMessageText: Cashier messageExpiredCard.
+		
+	self assert: 0 equals: aCashier ammountCharged.
+	self assert: aLedger isEmpty.
+		! !
+
+!testRun: #CashierTest #test02CashierCannotCheckoutOnExpiredCard stamp: 'sjd 11/6/2019 18:07:55'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierCannotCheckoutOnEmptyCart stamp: 'sjd 11/6/2019 18:07:55'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCannotCheckoutOnExpiredCard stamp: 'sjd 11/6/2019 18:07:55'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 18:07:55'!
+PASSED!
+
+!testRun: #CashierTest #test04CannotDebitFromCardWithoutFunds stamp: 'sjd 11/6/2019 18:07:55'!
+PASSED!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:08:07' prior: 50784854!
+test01CashierCannotCheckoutOnEmptyCart
+
+	| aCard aCart aCashier aLedger |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	
+	self should: [ aCashier checkout: aCart with: aCard onDay: self today ]
+		raise: Error - MessageNotUnderstood 
+		withMessageText: Cashier messageEmptyCart.
+		
+	self assert: 0 equals: aCashier ammountCharged .
+	self assert: aLedger isEmpty.
+		! !
+
+!testRun: #CashierTest #test01CashierCannotCheckoutOnEmptyCart stamp: 'sjd 11/6/2019 18:08:08'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierCannotCheckoutOnEmptyCart stamp: 'sjd 11/6/2019 18:08:08'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCannotCheckoutOnExpiredCard stamp: 'sjd 11/6/2019 18:08:08'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 18:08:08'!
+PASSED!
+
+!testRun: #CashierTest #test04CannotDebitFromCardWithoutFunds stamp: 'sjd 11/6/2019 18:08:08'!
+PASSED!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:08:10' prior: 50785381!
+test01CashierCannotCheckoutOnEmptyCart
+
+	| aCard aCart aCashier aLedger |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	
+	self should: [ aCashier checkout: aCart with: aCard onDay: self today ]
+		raise: Error - MessageNotUnderstood 
+		withMessageText: Cashier messageEmptyCart.
+		
+	self assert: 0 equals: aCashier ammountCharged.
+	self assert: aLedger isEmpty.
+		! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:08:13' prior: 50785417!
+test01CashierCannotCheckoutOnEmptyCart
+
+	| aCard aCart aCashier aLedger |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	
+	self should: [ aCashier checkout: aCart with: aCard onDay: self today ]
+		raise: Error - MessageNotUnderstood
+		withMessageText: Cashier messageEmptyCart.
+		
+	self assert: 0 equals: aCashier ammountCharged.
+	self assert: aLedger isEmpty.
+		! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:09:59' prior: 50785253!
+test04CannotDebitFromCardWithoutFunds
+
+	| aCard aCart aCashier aLedger mock |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aCart add: 'a'.
+	
+	mock := DebitInterface howToDebit: self withoutFunds.
+	
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	self should: [ aCashier checkout: aCart with: aCard onDay: self today onInterface: mock ]
+		 raise:  Error - MessageNotUnderstood
+		 withMessageText: DebitInterface notEnoughFundsMessage.
+	
+	self assert: 0 equals: aCashier ammountCharged .
+	self assert: aLedger isEmpty.
+		! !
+!DebitInterface class methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:10:07'!
+notEnoughFundsMessage! !
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:10:30' prior: 50785193!
+withoutFunds
+	^ [ :aCard :aValue | self error: DebitInterface notEnoughFundsMessage ]! !
+!DebitInterface class methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:10:40' prior: 50785477!
+notEnoughFundsMessage
+	^ 'No hay fondos suficientes'! !
+
+!testRun: #CashierTest #test01CashierCannotCheckoutOnEmptyCart stamp: 'sjd 11/6/2019 18:10:41'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCannotCheckoutOnExpiredCard stamp: 'sjd 11/6/2019 18:10:41'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 18:10:41'!
+PASSED!
+
+!testRun: #CashierTest #test04CannotDebitFromCardWithoutFunds stamp: 'sjd 11/6/2019 18:10:41'!
+PASSED!
+
+!testRun: #CardTest #test01CreatesCardCorrectly stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CardTest #test02CannotCreateCardWithLessThan16Digits stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CardTest #test03CannotCreateCardWithMoreThan16Digits stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CardTest #test04IsNotExpiredWhenSameMonth stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CardTest #test05IsNotExpiredWhenNotExpiredByAMonth stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CardTest #test06IsExpiredWhenExpiredByAMonth stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CartTest #test09CartSummarizesCorrectlyForCeroItems stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CartTest #test10CartSummarizesCorrectlyForOneItem stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CartTest #test11CartSummarizesCorrectlyForTwoItems stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CartTest #test12CartCalculatesBalanceForCeroItems stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CartTest #test13CartCalculatesBalanceCorrectlyForTwoItems stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CashierTest #test01CashierCannotCheckoutOnEmptyCart stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CashierTest #test02CashierCannotCheckoutOnExpiredCard stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CashierTest #test03CashierChecksOutOneCartForValidCart stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+!testRun: #CashierTest #test04CannotDebitFromCardWithoutFunds stamp: 'sjd 11/6/2019 18:10:45'!
+PASSED!
+
+----QUIT----(6 November 2019 18:10:53) CuisUniversity-3938.image priorSource: 14505102!

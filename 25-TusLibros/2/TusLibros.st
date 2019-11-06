@@ -1,4 +1,4 @@
-!classDefinition: #CardTest category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+!classDefinition: #CardTest category: #TusLibros stamp: 'sjd 11/6/2019 18:10:51'!
 TestCase subclass: #CardTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -66,7 +66,7 @@ test06IsExpiredWhenExpiredByAMonth
 	self assert: (card isExpiredOn: (FixedGregorianDate yearNumber: 2000 month: February dayNumber: 1)).! !
 
 
-!classDefinition: #CartTest category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+!classDefinition: #CartTest category: #TusLibros stamp: 'sjd 11/6/2019 18:10:51'!
 TestCase subclass: #CartTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -243,7 +243,7 @@ itemSellByTheStore
 	^ 'validBook'! !
 
 
-!classDefinition: #CashierTest category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+!classDefinition: #CashierTest category: #TusLibros stamp: 'sjd 11/6/2019 18:10:51'!
 TestCase subclass: #CashierTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -262,7 +262,11 @@ anExpiredCard
 			holder: 'Guido Objeto metodo'
 			expires: (GregorianMonthOfYear yearNumber: 2000 month: January)! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:54:35'!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 17:54:58'!
+correctDebit
+	^ [ :aCard :aPrice ]! !
+
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:08:13'!
 test01CashierCannotCheckoutOnEmptyCart
 
 	| aCard aCart aCashier aLedger |
@@ -272,13 +276,14 @@ test01CashierCannotCheckoutOnEmptyCart
 	aCard := self aValidCard.
 	
 	self should: [ aCashier checkout: aCart with: aCard onDay: self today ]
-		raise: Error - MessageNotUnderstood 
+		raise: Error - MessageNotUnderstood
 		withMessageText: Cashier messageEmptyCart.
-	self assert: aCashier ammountCharged equals: 0.
+		
+	self assert: 0 equals: aCashier ammountCharged.
 	self assert: aLedger isEmpty.
 		! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:54:11'!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:07:54'!
 test02CashierCannotCheckoutOnExpiredCard
 
 	| aCard aCart aCashier aLedger |
@@ -292,23 +297,46 @@ test02CashierCannotCheckoutOnExpiredCard
 	self should: [ aCashier checkout: aCart with: aCard onDay: self today ]
 		raise: Error - MessageNotUnderstood 
 		withMessageText: Cashier messageExpiredCard.
-	self assert: aCashier ammountCharged equals: 0.
+		
+	self assert: 0 equals: aCashier ammountCharged.
 	self assert: aLedger isEmpty.
 		! !
 
-!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 20:55:02'!
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:07:33'!
 test03CashierChecksOutOneCartForValidCart
 
-	| aCard aCart aCashier aLedger |
+	| aCard aCart aCashier aLedger mock |
 	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
 	aCart add: 'a'.
+	
+	mock := DebitInterface howToDebit: self correctDebit.
 	
 	aLedger := OrderedCollection new.
 	aCashier := Cashier withLedger: aLedger.
 	aCard := self aValidCard.
-	aCashier checkout: aCart with: aCard onDay: self today.
+	aCashier checkout: aCart with: aCard onDay: self today onInterface: mock.
 	
-	self assert: aCashier ammountCharged equals: 10.
+	self assert: 10 equals: aCashier ammountCharged.
+	self assert: aLedger isEmpty.
+		! !
+
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:09:59'!
+test04CannotDebitFromCardWithoutFunds
+
+	| aCard aCart aCashier aLedger mock |
+	aCart := Cart acceptingItemsOf: (Dictionary newFromPairs: { 'a'. 10 }).
+	aCart add: 'a'.
+	
+	mock := DebitInterface howToDebit: self withoutFunds.
+	
+	aLedger := OrderedCollection new.
+	aCashier := Cashier withLedger: aLedger.
+	aCard := self aValidCard.
+	self should: [ aCashier checkout: aCart with: aCard onDay: self today onInterface: mock ]
+		 raise:  Error - MessageNotUnderstood
+		 withMessageText: DebitInterface notEnoughFundsMessage.
+	
+	self assert: 0 equals: aCashier ammountCharged .
 	self assert: aLedger isEmpty.
 		! !
 
@@ -316,8 +344,12 @@ test03CashierChecksOutOneCartForValidCart
 today
 	^ FixedGregorianDate yearNumber: 2019 month: November dayNumber: 4.! !
 
+!CashierTest methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:10:30'!
+withoutFunds
+	^ [ :aCard :aValue | self error: DebitInterface notEnoughFundsMessage ]! !
+
 
-!classDefinition: #Card category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+!classDefinition: #Card category: #TusLibros stamp: 'sjd 11/6/2019 18:10:51'!
 Object subclass: #Card
 	instanceVariableNames: 'number holder expiration'
 	classVariableNames: ''
@@ -349,7 +381,7 @@ number
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Card class' category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+!classDefinition: 'Card class' category: #TusLibros stamp: 'sjd 11/6/2019 18:10:52'!
 Card class
 	instanceVariableNames: ''!
 
@@ -362,7 +394,7 @@ number: aNumber holder: aName expires: aMonthYear
 	^ self new initializeWithNumber: aNumber holder: aName expires: aMonthYear! !
 
 
-!classDefinition: #Cart category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+!classDefinition: #Cart category: #TusLibros stamp: 'sjd 11/6/2019 18:10:52'!
 Object subclass: #Cart
 	instanceVariableNames: 'catalog items'
 	classVariableNames: ''
@@ -449,7 +481,7 @@ add: aQuantity of: anItem
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cart class' category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+!classDefinition: 'Cart class' category: #TusLibros stamp: 'sjd 11/6/2019 18:10:52'!
 Cart class
 	instanceVariableNames: ''!
 
@@ -459,7 +491,7 @@ acceptingItemsOf: aCatalog
 	^self new initializeAcceptingItemsOf: aCatalog ! !
 
 
-!classDefinition: #Cashier category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+!classDefinition: #Cashier category: #TusLibros stamp: 'sjd 11/6/2019 18:10:52'!
 Object subclass: #Cashier
 	instanceVariableNames: 'ledger ammountCharged'
 	classVariableNames: ''
@@ -477,6 +509,17 @@ checkout: aCart with: aCard onDay: aFixedDate
 	
 	ammountCharged := aCart balance.! !
 
+!Cashier methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:02:05'!
+checkout: aCart with: aCard onDay: aFixedDate onInterface: aDebitInterface
+	| aBalance |
+	aCart isEmpty ifTrue: [ self error: Cashier messageEmptyCart ].
+	(aCard isExpiredOn: aFixedDate) ifTrue: [ self error: Cashier messageExpiredCard ].
+	
+	aBalance := aCart balance.
+	aDebitInterface debit: aBalance from: aCard.
+	
+	ammountCharged := aBalance.! !
+
 !Cashier methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 19:53:38'!
 initializeWithLedger: aLedger
 	ledger := aLedger.
@@ -484,7 +527,7 @@ initializeWithLedger: aLedger
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cashier class' category: #TusLibros stamp: 'sjd 11/4/2019 20:55:12'!
+!classDefinition: 'Cashier class' category: #TusLibros stamp: 'sjd 11/6/2019 18:10:52'!
 Cashier class
 	instanceVariableNames: ''!
 
@@ -499,3 +542,33 @@ messageExpiredCard
 !Cashier class methodsFor: 'as yet unclassified' stamp: 'sjd 11/4/2019 19:19:17'!
 withLedger: aLedger
 	^ self new initializeWithLedger: aLedger! !
+
+
+!classDefinition: #DebitInterface category: #TusLibros stamp: 'sjd 11/6/2019 18:10:52'!
+Object subclass: #DebitInterface
+	instanceVariableNames: 'howToDebitClosure'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!DebitInterface methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:02:54'!
+debit: aBalance from: aCard
+	^ howToDebitClosure value: aCard value: aBalance ! !
+
+!DebitInterface methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 17:57:33'!
+initializeWithHowToDebit: aClosure
+	howToDebitClosure := aClosure! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'DebitInterface class' category: #TusLibros stamp: 'sjd 11/6/2019 18:10:52'!
+DebitInterface class
+	instanceVariableNames: ''!
+
+!DebitInterface class methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 17:57:18'!
+howToDebit: aClosure
+	^ self new initializeWithHowToDebit: aClosure! !
+
+!DebitInterface class methodsFor: 'as yet unclassified' stamp: 'sjd 11/6/2019 18:10:40'!
+notEnoughFundsMessage
+	^ 'No hay fondos suficientes'! !
