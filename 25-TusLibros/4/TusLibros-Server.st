@@ -1,4 +1,4 @@
-!classDefinition: #HonestClock category: #'TusLibros-Server' stamp: 'a 12/1/2019 14:45:37'!
+!classDefinition: #HonestClock category: #'TusLibros-Server' stamp: 'a 12/1/2019 15:49:04'!
 Object subclass: #HonestClock
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -14,42 +14,9 @@ today
 	^ Date today! !
 
 
-!classDefinition: #StringGenius category: #'TusLibros-Server' stamp: 'a 12/1/2019 14:45:37'!
-Object subclass: #StringGenius
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'TusLibros-Server'!
-
-!StringGenius methodsFor: 'converting' stamp: 'NR 11/11/2019 16:14:06'!
-firstLetter: aWord
-	
-	^aWord at:1! !
-
-!StringGenius methodsFor: 'converting' stamp: 'NR 11/11/2019 17:20:09'!
-substrings: aSentence
-	
-	^aSentence substrings! !
-
-!StringGenius methodsFor: 'converting' stamp: 'NR 11/11/2019 16:14:58'!
-toLowercase: aWord
-	
-	^aWord translateToLowercase! !
-
-!StringGenius methodsFor: 'converting' stamp: 'NR 11/11/2019 16:14:47'!
-toUppercase: aWord
-	
-	^aWord translateToUppercase! !
-
-!StringGenius methodsFor: 'converting' stamp: 'NR 11/11/2019 16:44:40'!
-vowels: aWord
-	
-	^aWord select: [:letter | letter isVowel]! !
-
-
-!classDefinition: #TusLibrosServerController category: #'TusLibros-Server' stamp: 'a 12/1/2019 14:45:37'!
+!classDefinition: #TusLibrosServerController category: #'TusLibros-Server' stamp: 'a 12/1/2019 15:49:04'!
 Object subclass: #TusLibrosServerController
-	instanceVariableNames: 'webServer port stringGenius hiList systemFacade'
+	instanceVariableNames: 'webServer port systemFacade salesBook'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros-Server'!
@@ -75,19 +42,17 @@ stopListening
 	^'Stopped listening from port: ', self port asString! !
 
 
-!TusLibrosServerController methodsFor: 'initialization' stamp: 'a 12/1/2019 13:45:20'!
+!TusLibrosServerController methodsFor: 'initialization' stamp: 'a 12/1/2019 15:48:57'!
 initializeWith: aPortNumber
-
-	| userDatabase catalog salesBook |
-	userDatabase := Dictionary new at: 'guido' put: 'saki'; yourself.
-	catalog := Dictionary new at: '123' put: 5; yourself.
 	salesBook := OrderedCollection new.
 	
-	systemFacade := TusLibrosSystemFacade authenticatingWith: userDatabase acceptingItemsOf: catalog registeringOn: salesBook debitingThrought: AlwaysOkMerchantProcessor new measuringTimeWith: HonestClock new.
+	systemFacade := TusLibrosSystemFacade authenticatingWith: self userDatabase
+														acceptingItemsOf: self catalog
+														registeringOn: salesBook
+														debitingThrought: AlwaysOkMerchantProcessor new
+														measuringTimeWith: HonestClock new.
 	
-	stringGenius := StringGenius new.
-	
-	port:= aPortNumber.
+	port := aPortNumber.
 	
 	webServer := WebServer new listenOn: aPortNumber.
 	
@@ -103,69 +68,7 @@ initializeWith: aPortNumber
 	
 	self register: [:req | self listPurchases: req ] for: '/listPurchases'.
 	
-	webServer addService: '/sayHi' action:[:request |	
-		
-		"request send200Response: (self sayRandomHi)"
-		request send200Response: (self sayRandomHi asUtf8) 
-				 contentType: 'application/json; charset=utf-8' do: [:resp | 
-					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
-		].
-	
-	webServer addService: '/substrings' action:[:request | |substringsAsJson sentence substrings |
-		
-		[sentence := (request fields at:'sentence').
-		substrings := stringGenius substrings: sentence.
-		substringsAsJson:= WebUtils jsonEncode: (substrings).
-		"request send200Response: (substringsAsJson)"
-		request send200Response: (substringsAsJson asUtf8) 
-				 contentType: 'application/json; charset=utf-8' do: [:resp | 
-					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
-		 ] 
-		on: Error 
-		do: [ :anError |
-			request send404Response: (anError messageText) ]].
-	
-	webServer addService: '/firstLetter' action:[:request | |letterAsJson word letter |
-		
-		[word := (request fields at:'word').
-		letter := stringGenius firstLetter: word.
-		letterAsJson:= WebUtils jsonEncode: (letter asString).
-		"request send200Response: (letterAsJson)"
-		request send200Response: (letterAsJson asUtf8) 
-				 contentType: 'application/json; charset=utf-8' do: [:resp | 
-					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
-		 ] 
-		on: Error 
-		do: [ :anError |
-			request send404Response: (anError messageText) ]].
-	
-	webServer addService: '/vowels' action:[:request | |vowelsAsJson word vowels |
-		
-		[word := (request fields at:'word').
-		vowels := stringGenius vowels: word.
-		vowelsAsJson:= WebUtils jsonEncode: (vowels).
-		"request send200Response: (vowelsAsJson)"
-		request send200Response: (vowelsAsJson asUtf8) 
-				 contentType: 'application/json; charset=utf-8' do: [:resp | 
-					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
-		 ] 
-		on: Error 
-		do: [ :anError |
-			request send404Response: (anError messageText) ]].
-	
-	webServer addService: '/toUppercase' action:[:request | |upperCasedWordAsJson word upperCasedWord |
-		
-		[word := (request fields at:'word').
-		upperCasedWord := stringGenius toUppercase: word.
-		upperCasedWordAsJson:= WebUtils jsonEncode: (upperCasedWord).
-		"request send200Response: (upperCasedWordAsJson)"
-		request send200Response: (upperCasedWordAsJson asUtf8) 
-				 contentType: 'application/json; charset=utf-8' do: [:resp | 
-					resp headerAt: 'Access-Control-Allow-Origin' put: '*'.]
-		 ] 
-		on: Error 
-		do: [ :anError |
-			request send404Response: (anError messageText) ]].
+	self register: [:req | self listActive: req ] for: '/listActiveCarts'.
 	
 ! !
 
@@ -183,6 +86,38 @@ port
 register: aBlock for: aURI
  	webServer addService: aURI action: [:request | self handleWith: aBlock AndFormatErrorFor: request ].
 ! !
+
+
+!TusLibrosServerController methodsFor: 'database' stamp: 'a 12/1/2019 15:47:50'!
+catalog
+	^ Dictionary new
+		at: '0' put: 10;
+		at: '1' put: 6;
+		at: '2' put: 25;
+		at: '3' put: 8;
+		at: '4' put: 4;
+		at: '5' put: 10;
+		at: '6' put: 6;
+		at: '7' put: 25;
+		at: '8' put: 8;
+		at: '9' put: 4;
+		at: '10' put: 10;
+		at: '11' put: 6;
+		at: '12' put: 25;
+		at: '13' put: 8;
+		at: '14' put: 4;
+		at: '15' put: 4;
+		yourself.! !
+
+!TusLibrosServerController methodsFor: 'database' stamp: 'a 12/1/2019 15:44:42'!
+userDatabase
+	^ Dictionary new
+		at: 'Guido' put: '5678';
+		at: 'Valentin' put: '1234';
+		at: 'Hernan' put: 'cuis';
+		at: 'Harry' put: 'potter';
+		at: 'Archie' put: 'betty';
+		yourself.! !
 
 
 !TusLibrosServerController methodsFor: 'handlers' stamp: 'a 11/30/2019 20:43:32'!
@@ -233,7 +168,19 @@ deleteFromCart: aRequest
 handleWith: aBlock AndFormatErrorFor: aRequest
 	[ aBlock value: aRequest ] on: Error do: [ :error | aRequest send404Response: ('{ "error": "', error messageText , '" }') ]! !
 
-!TusLibrosServerController methodsFor: 'handlers' stamp: 'a 12/1/2019 13:45:37'!
+!TusLibrosServerController methodsFor: 'handlers' stamp: 'a 12/1/2019 15:32:09'!
+listActive: aRequest
+	| password clientId active serialization |
+	clientId := aRequest fields at: 'clientId'.
+	password := aRequest fields at: 'password'.
+	
+	active := systemFacade listActiveCartsFor: clientId authenticatingWith: password.
+	serialization := ''.
+	active do: [ :cartId | serialization := serialization, (cartId asString), ',' ].
+
+	aRequest send200Response: ('{ "books": [', (serialization copyFrom:1 to: (serialization size -1)), '] }'). ! !
+
+!TusLibrosServerController methodsFor: 'handlers' stamp: 'a 12/1/2019 15:30:00'!
 listCart: aRequest
 	| cartId list serialization |
 
@@ -242,11 +189,11 @@ listCart: aRequest
 	list := systemFacade listCartIdentifiedAs: cartId.
 	serialization := ''.
 	list keysAndValuesDo: [ :aBook :aQuantity |
-		serialization := serialization, '{ "bookIsbn": "', aBook asString, '", "quantity":', aQuantity asString, '}'
+		serialization := serialization, '{ "bookIsbn": "', aBook asString, '", "quantity":', aQuantity asString, '},'
 		].
-	aRequest send200Response: ('{ "books": [', (serialization copyFrom: 2), '] }'). ! !
+	aRequest send200Response: ('{ "books": [', (serialization copyFrom:1 to: (serialization size -1)), '] }'). ! !
 
-!TusLibrosServerController methodsFor: 'handlers' stamp: 'a 12/1/2019 14:41:29'!
+!TusLibrosServerController methodsFor: 'handlers' stamp: 'a 12/1/2019 15:30:20'!
 listPurchases: aRequest
 	| password clientId list serialization |
 	clientId := aRequest fields at: 'clientId'.
@@ -255,27 +202,13 @@ listPurchases: aRequest
 	list := systemFacade listPurchasesOf: clientId authenticatingWith: password.
 	serialization := ''.
 	list keysAndValuesDo: [ :aBook :aQuantity |
-		serialization := serialization, '{ "bookIsbn": "', aBook asString, '", "price":', (systemFacade priceOf: aBook) asString, ', "spent":', aQuantity asString, '}'
+		serialization := serialization, '{ "bookIsbn": "', aBook asString, '", "price":', (systemFacade priceOf: aBook) asString, ', "spent":', aQuantity asString, '},'
 		].
-	aRequest send200Response: ('{ "books": [', (serialization copyFrom: 2), '] }'). ! !
-
-
-!TusLibrosServerController methodsFor: 'private' stamp: 'NR 6/24/2019 07:16:54'!
-hiList
-	
-	^OrderedCollection with: 'Hi!!' with: 'Hodor!!' with: 'I am Groot!!' with: 'My name is Homer Simp... Doh!!' with: 'I am inevitable...' with: 'Because Im Baaaatman!!'.
-	
-	! !
-
-!TusLibrosServerController methodsFor: 'private' stamp: 'NR 6/24/2019 07:15:43'!
-sayRandomHi
-	
-	^hiList at: (hiList size atRandom).
-	! !
+	aRequest send200Response: ('{ "books": [', (serialization copyFrom:1 to: (serialization size -1)), '] }'). ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TusLibrosServerController class' category: #'TusLibros-Server' stamp: 'a 12/1/2019 14:45:37'!
+!classDefinition: 'TusLibrosServerController class' category: #'TusLibros-Server' stamp: 'a 12/1/2019 15:49:04'!
 TusLibrosServerController class
 	instanceVariableNames: ''!
 
@@ -285,7 +218,7 @@ listeningOn: aPortNumber
 	^self new initializeWith: aPortNumber.! !
 
 
-!classDefinition: #AlwaysOkMerchantProcessor category: #'TusLibros-Server' stamp: 'a 12/1/2019 14:45:37'!
+!classDefinition: #AlwaysOkMerchantProcessor category: #'TusLibros-Server' stamp: 'a 12/1/2019 15:49:04'!
 MerchantProcessor subclass: #AlwaysOkMerchantProcessor
 	instanceVariableNames: ''
 	classVariableNames: ''

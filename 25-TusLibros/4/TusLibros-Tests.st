@@ -1,4 +1,4 @@
-!classDefinition: #CartTest category: #'TusLibros-Tests' stamp: 'a 12/1/2019 14:45:28'!
+!classDefinition: #CartTest category: #'TusLibros-Tests' stamp: 'a 12/1/2019 15:49:09'!
 TestCase subclass: #CartTest
 	instanceVariableNames: 'testObjectsFactory'
 	classVariableNames: ''
@@ -205,7 +205,7 @@ setUp
 	testObjectsFactory := StoreTestObjectsFactory new.! !
 
 
-!classDefinition: #CashierTest category: #'TusLibros-Tests' stamp: 'a 12/1/2019 14:45:28'!
+!classDefinition: #CashierTest category: #'TusLibros-Tests' stamp: 'a 12/1/2019 15:49:09'!
 TestCase subclass: #CashierTest
 	instanceVariableNames: 'testObjectsFactory debitBehavior'
 	classVariableNames: ''
@@ -359,7 +359,7 @@ debit: anAmount from: aCreditCard
 	^debitBehavior value: anAmount value: aCreditCard ! !
 
 
-!classDefinition: #TusLibrosSystemFacadeTest category: #'TusLibros-Tests' stamp: 'a 12/1/2019 14:45:28'!
+!classDefinition: #TusLibrosSystemFacadeTest category: #'TusLibros-Tests' stamp: 'a 12/1/2019 15:49:09'!
 TestCase subclass: #TusLibrosSystemFacadeTest
 	instanceVariableNames: 'testObjectsFactory clock systemFacade'
 	classVariableNames: ''
@@ -415,6 +415,28 @@ test17CanNotAddToCartWhenSessionIsExpired
 			self assert: anError messageText equals: systemFacade sessionHasExpiredErrorDescription.
 			self revertTime: systemFacade sessionDuration.
 			self assert: (systemFacade listCartIdentifiedAs: cartId) isEmpty ]
+! !
+
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'a 12/1/2019 15:35:38'!
+test33CanNotAddToCartAlreadyCheckedOut
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
+	
+	systemFacade
+		checkOutCartIdentifiedAs: cartId
+		withCreditCardNumbered: testObjectsFactory notExpiredCreditCardNumber
+		ownedBy: testObjectsFactory notExpiredCreditCardOwner
+		expiringOn: testObjectsFactory notExpiredMonthOfYear.
+
+	self
+		should: [systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade cartAlreadyCheckedout .
+			self assert: ((systemFacade listCartIdentifiedAs: cartId) at: self validBook) equals: 2 ]
 ! !
 
 
@@ -525,6 +547,10 @@ anotherValidBook
 
 	^testObjectsFactory anotherItemSellByTheStore ! !
 
+!TusLibrosSystemFacadeTest methodsFor: 'test objects' stamp: 'a 12/1/2019 15:00:40'!
+anotherValidUser
+	^ 'valen'! !
+
 !TusLibrosSystemFacadeTest methodsFor: 'test objects' stamp: 'HernanWilkinson 6/21/2013 23:49'!
 invalidBook
 
@@ -561,11 +587,12 @@ validUserPassword
 
 	^'validUserPassword'! !
 
-!TusLibrosSystemFacadeTest methodsFor: 'test objects' stamp: 'HernanWilkinson 6/21/2013 22:43'!
+!TusLibrosSystemFacadeTest methodsFor: 'test objects' stamp: 'a 12/1/2019 15:01:10'!
 validUsersAndPasswords
 
 	^Dictionary new
 		at: self validUser put: self validUserPassword;
+		at: self anotherValidUser put: self validUserPassword;
 		yourself! !
 
 
@@ -748,6 +775,92 @@ revertTime: aDuration
 	clock revertTime: aDuration ! !
 
 
+!TusLibrosSystemFacadeTest methodsFor: 'tests - lists active carts' stamp: 'a 12/1/2019 14:49:28'!
+test25CannotListActiveCartsForWrongUser
+
+	
+	self should: [ systemFacade listActiveCartsFor: self invalidUser authenticatingWith: self validUserPassword ]
+		raise: Error - MessageNotUnderstood 
+		withMessageText: systemFacade invalidUserAndOrPasswordErrorDescription! !
+
+!TusLibrosSystemFacadeTest methodsFor: 'tests - lists active carts' stamp: 'a 12/1/2019 14:50:46'!
+test26CannotListActiveCartsForWrongPassword
+
+	
+	self should: [ systemFacade listActiveCartsFor: self validUser authenticatingWith: self invalidPassword ]
+		raise: Error - MessageNotUnderstood 
+		withMessageText: systemFacade invalidUserAndOrPasswordErrorDescription! !
+
+!TusLibrosSystemFacadeTest methodsFor: 'tests - lists active carts' stamp: 'a 12/1/2019 14:51:55'!
+test27ActiveCartsIsEmptyWhenNoActiveCarts
+
+	| active |
+	
+	active := systemFacade listActiveCartsFor: self validUser authenticatingWith: self validUserPassword.
+	self assert: (active isEmpty).! !
+
+!TusLibrosSystemFacadeTest methodsFor: 'tests - lists active carts' stamp: 'a 12/1/2019 14:58:47'!
+test28ListsCorrectActiveCartWhenOneCreated
+
+	| active cartId |
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	active := systemFacade listActiveCartsFor: self validUser authenticatingWith: self validUserPassword.
+	
+	self assert: 1 equals: active size.
+	self assert: 1 equals: (active occurrencesOf: cartId).! !
+
+!TusLibrosSystemFacadeTest methodsFor: 'tests - lists active carts' stamp: 'a 12/1/2019 15:00:23'!
+test29ListsAUsersActiveCartButNotAllActiveCarts
+
+	| active cartId |
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade createCartFor: self anotherValidUser authenticatedWith: self validUserPassword.
+	active := systemFacade listActiveCartsFor: self validUser authenticatingWith: self validUserPassword.
+	
+	self assert: 1 equals: active size.
+	self assert: 1 equals: (active occurrencesOf: cartId).! !
+
+!TusLibrosSystemFacadeTest methodsFor: 'tests - lists active carts' stamp: 'a 12/1/2019 15:06:51'!
+test30ListsEmptyActiveCartsWhenCartsExpired
+
+	| active |
+	systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	self advanceTime: (systemFacade sessionDuration + 1 minutes).
+
+	active := systemFacade listActiveCartsFor: self validUser authenticatingWith: self validUserPassword.
+	
+	self assert: (active isEmpty)! !
+
+!TusLibrosSystemFacadeTest methodsFor: 'tests - lists active carts' stamp: 'a 12/1/2019 15:11:34'!
+test31ListsOneActiveCartWhenOnlyOneIsExpired
+
+	| active cartId |
+	systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	self advanceTime: (systemFacade sessionDuration + 1 minutes).
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+
+	active := systemFacade listActiveCartsFor: self validUser authenticatingWith: self validUserPassword.
+	
+	self assert: 1 equals: (active size).
+	self assert: 1 equals: (active occurrencesOf: cartId).! !
+
+!TusLibrosSystemFacadeTest methodsFor: 'tests - lists active carts' stamp: 'a 12/1/2019 15:18:40'!
+test32DoesNotListCheckedOutCart
+
+	| active cartId |
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade add: 3 of: testObjectsFactory itemSellByTheStore toCartIdentifiedAs: cartId.
+	systemFacade
+		checkOutCartIdentifiedAs: cartId
+		withCreditCardNumbered: testObjectsFactory notExpiredCreditCardNumber
+		ownedBy: testObjectsFactory notExpiredCreditCardOwner
+		expiringOn: testObjectsFactory notExpiredMonthOfYear.
+
+	active := systemFacade listActiveCartsFor: self validUser authenticatingWith: self validUserPassword.
+	
+	self assert: (active isEmpty).! !
+
+
 !TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'a 11/30/2019 17:56:42'!
 test20CanDeleteItemsFromCreatedCart
 
@@ -799,7 +912,7 @@ test22CannotDeleteItemsWhenSessionIsExpired
 	! !
 
 
-!classDefinition: #ManualClock category: #'TusLibros-Tests' stamp: 'a 12/1/2019 14:45:28'!
+!classDefinition: #ManualClock category: #'TusLibros-Tests' stamp: 'a 12/1/2019 15:49:09'!
 Clock subclass: #ManualClock
 	instanceVariableNames: 'now'
 	classVariableNames: ''
@@ -835,7 +948,7 @@ initializeNow: aTime
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'ManualClock class' category: #'TusLibros-Tests' stamp: 'a 12/1/2019 14:45:28'!
+!classDefinition: 'ManualClock class' category: #'TusLibros-Tests' stamp: 'a 12/1/2019 15:49:09'!
 ManualClock class
 	instanceVariableNames: ''!
 
@@ -845,7 +958,7 @@ now: aTime
 	^self new initializeNow: aTime ! !
 
 
-!classDefinition: #StoreTestObjectsFactory category: #'TusLibros-Tests' stamp: 'a 12/1/2019 14:45:28'!
+!classDefinition: #StoreTestObjectsFactory category: #'TusLibros-Tests' stamp: 'a 12/1/2019 15:49:09'!
 Object subclass: #StoreTestObjectsFactory
 	instanceVariableNames: 'today'
 	classVariableNames: ''
