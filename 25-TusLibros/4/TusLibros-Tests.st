@@ -1,4 +1,4 @@
-!classDefinition: #CartTest category: #'TusLibros-Tests' stamp: 'a 11/30/2019 17:22:33'!
+!classDefinition: #CartTest category: #'TusLibros-Tests' stamp: 'a 12/1/2019 14:45:28'!
 TestCase subclass: #CartTest
 	instanceVariableNames: 'testObjectsFactory'
 	classVariableNames: ''
@@ -205,7 +205,7 @@ setUp
 	testObjectsFactory := StoreTestObjectsFactory new.! !
 
 
-!classDefinition: #CashierTest category: #'TusLibros-Tests' stamp: 'a 11/30/2019 17:22:33'!
+!classDefinition: #CashierTest category: #'TusLibros-Tests' stamp: 'a 12/1/2019 14:45:28'!
 TestCase subclass: #CashierTest
 	instanceVariableNames: 'testObjectsFactory debitBehavior'
 	classVariableNames: ''
@@ -359,65 +359,14 @@ debit: anAmount from: aCreditCard
 	^debitBehavior value: anAmount value: aCreditCard ! !
 
 
-!classDefinition: #TusLibrosSystemFacadeTest category: #'TusLibros-Tests' stamp: 'a 11/30/2019 17:22:33'!
+!classDefinition: #TusLibrosSystemFacadeTest category: #'TusLibros-Tests' stamp: 'a 12/1/2019 14:45:28'!
 TestCase subclass: #TusLibrosSystemFacadeTest
 	instanceVariableNames: 'testObjectsFactory clock systemFacade'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros-Tests'!
 
-!TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'a 11/30/2019 17:21:24'!
-test20CanDeleteItemsFromCreatedCart
-
-	| cartId |
-
-	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
-	
-	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
-	systemFacade add: 2 of: self anotherValidBook toCartIdentifiedAs: cartId.
-	systemFacade delete: 1 of: self anotherValidBook fromCartIdentifiedAs: cartId.
-	
-	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 2.
-	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self anotherValidBook) equals: 1.
-	! !
-
-!TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'a 11/30/2019 17:21:15'!
-test21CannotDeleteItemsIfCartHasNoneOfThoseItems
-
-	| cartId |
-
-	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
-	
-	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
-	
-	self should: [ systemFacade delete: 1 of: self anotherValidBook fromCartIdentifiedAs: cartId ]
-		raise: Error - MessageNotUnderstood
-		withExceptionDo: [ :anError |
-			self assert: anError messageText equals: systemFacade invalidQuantityErrorMessage.
-			self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 2.
-			]
-	! !
-
-!TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'a 11/30/2019 17:20:56'!
-test22CannotDeleteItemsWhenSessionIsExpired
-
-	| cartId |
-
-	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
-	
-	self advanceTime: (systemFacade sessionDuration + 1 minutes) .
-	
-	self
-		should: [systemFacade delete: 2 of: self validBook fromCartIdentifiedAs: cartId]
-		raise: Error - MessageNotUnderstood
-		withExceptionDo: [ :anError |
-			self assert: anError messageText equals: systemFacade sessionHasExpiredErrorDescription.
-			self revertTime: systemFacade sessionDuration.
-			self assert: (systemFacade listCartIdentifiedAs: cartId) isEmpty ]
-	! !
-
-
-!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'HAW 6/19/2018 11:41:46'!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'a 11/30/2019 17:56:15'!
 test04CanAddItemsToACreatedCart
 
 	| cartId |
@@ -425,7 +374,7 @@ test04CanAddItemsToACreatedCart
 	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
 
 	systemFacade add: 1 of: self validBook toCartIdentifiedAs: cartId.
-	self assert: ((systemFacade listCartIdentifiedAs: cartId) occurrencesOf: self validBook) equals: 1
+	self assert: ((systemFacade listCartIdentifiedAs: cartId) at: self validBook) equals: 1
 		! !
 
 !TusLibrosSystemFacadeTest methodsFor: 'tests - add to cart ' stamp: 'HAW 11/26/2018 18:03:02'!
@@ -505,6 +454,13 @@ test16CanNotListPurchasesOfValidCustomerWithInvalidPassword
 		raise: Error - MessageNotUnderstood
 		withExceptionDo: [ :anError |
 			self assert: anError messageText equals: systemFacade invalidUserAndOrPasswordErrorDescription ]! !
+
+!TusLibrosSystemFacadeTest methodsFor: 'tests - list purchases' stamp: 'a 12/1/2019 14:45:18'!
+test24GivesBackPriceForAnExistingItem
+
+	| price |
+	price := systemFacade priceOf: self validBook.
+	self assert: testObjectsFactory itemSellByTheStorePrice equals: price.! !
 
 
 !TusLibrosSystemFacadeTest methodsFor: 'tests - create cart' stamp: 'HAW 6/19/2018 11:40:51'!
@@ -707,6 +663,30 @@ test19CanNotCheckOutCartWhenSessionIsExpired
 
 	! !
 
+!TusLibrosSystemFacadeTest methodsFor: 'tests - checkout' stamp: 'a 11/30/2019 19:35:31'!
+test23CannotCheckOutCartAlreadyCheckedout
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade
+		checkOutCartIdentifiedAs: cartId
+		withCreditCardNumbered: testObjectsFactory notExpiredCreditCardNumber
+		ownedBy: testObjectsFactory notExpiredCreditCardOwner
+		expiringOn: testObjectsFactory notExpiredMonthOfYear.
+			
+	self should: [ systemFacade
+			checkOutCartIdentifiedAs: cartId
+			withCreditCardNumbered: testObjectsFactory notExpiredCreditCardNumber
+			ownedBy: testObjectsFactory notExpiredCreditCardOwner
+			expiringOn: testObjectsFactory notExpiredMonthOfYear
+	]	raise: Error - MessageNotUnderstood
+		withMessageText: systemFacade cartAlreadyCheckedout.
+
+
+	! !
+
 
 !TusLibrosSystemFacadeTest methodsFor: 'tests - list cart' stamp: 'HernanWilkinson 6/17/2015 20:53'!
 test07ListCartOfAnEmptyCartReturnsAnEmptyBag
@@ -727,7 +707,7 @@ test08CanNotListCartOfInvalidCartId
 			self assert: anError messageText equals: systemFacade invalidCartIdErrorDescription ]
 	! !
 
-!TusLibrosSystemFacadeTest methodsFor: 'tests - list cart' stamp: 'HAW 11/26/2018 18:04:32'!
+!TusLibrosSystemFacadeTest methodsFor: 'tests - list cart' stamp: 'a 11/30/2019 17:56:29'!
 test09ListCartReturnsTheRightNumberOfItems
 
 	| cartId cartContent |
@@ -737,8 +717,8 @@ test09ListCartReturnsTheRightNumberOfItems
 	systemFacade add: 2 of: self anotherValidBook toCartIdentifiedAs: cartId.
 	cartContent := systemFacade listCartIdentifiedAs: cartId.
 
-	self assert: (cartContent occurrencesOf: self validBook) equals: 1.
-	self assert: (cartContent occurrencesOf: self anotherValidBook) equals: 2
+	self assert: (cartContent at: self validBook) equals: 1.
+	self assert: (cartContent at: self anotherValidBook) equals: 2
 ! !
 
 !TusLibrosSystemFacadeTest methodsFor: 'tests - list cart' stamp: 'HAW 11/26/2018 18:04:42'!
@@ -767,8 +747,59 @@ revertTime: aDuration
 
 	clock revertTime: aDuration ! !
 
+
+!TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'a 11/30/2019 17:56:42'!
+test20CanDeleteItemsFromCreatedCart
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
+	systemFacade add: 2 of: self anotherValidBook toCartIdentifiedAs: cartId.
+	systemFacade delete: 1 of: self anotherValidBook fromCartIdentifiedAs: cartId.
+	
+	self assert: ((systemFacade listCartIdentifiedAs: cartId) at: self validBook) equals: 2.
+	self assert: ((systemFacade listCartIdentifiedAs: cartId) at: self anotherValidBook) equals: 1.
+	! !
+
+!TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'a 11/30/2019 17:56:48'!
+test21CannotDeleteItemsIfCartHasNoneOfThoseItems
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	
+	systemFacade add: 2 of: self validBook toCartIdentifiedAs: cartId.
+	
+	self should: [ systemFacade delete: 1 of: self anotherValidBook fromCartIdentifiedAs: cartId ]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade invalidQuantityErrorMessage.
+			self assert: ((systemFacade listCartIdentifiedAs: cartId) at: self validBook) equals: 2.
+			]
+	! !
+
+!TusLibrosSystemFacadeTest methodsFor: 'tests - remove from cart' stamp: 'a 11/30/2019 17:20:56'!
+test22CannotDeleteItemsWhenSessionIsExpired
+
+	| cartId |
+
+	cartId := systemFacade createCartFor: self validUser authenticatedWith: self validUserPassword.
+	
+	self advanceTime: (systemFacade sessionDuration + 1 minutes) .
+	
+	self
+		should: [systemFacade delete: 2 of: self validBook fromCartIdentifiedAs: cartId]
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [ :anError |
+			self assert: anError messageText equals: systemFacade sessionHasExpiredErrorDescription.
+			self revertTime: systemFacade sessionDuration.
+			self assert: (systemFacade listCartIdentifiedAs: cartId) isEmpty ]
+	! !
+
 
-!classDefinition: #ManualClock category: #'TusLibros-Tests' stamp: 'a 11/30/2019 17:22:33'!
+!classDefinition: #ManualClock category: #'TusLibros-Tests' stamp: 'a 12/1/2019 14:45:28'!
 Clock subclass: #ManualClock
 	instanceVariableNames: 'now'
 	classVariableNames: ''
@@ -804,7 +835,7 @@ initializeNow: aTime
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'ManualClock class' category: #'TusLibros-Tests' stamp: 'a 11/30/2019 17:22:33'!
+!classDefinition: 'ManualClock class' category: #'TusLibros-Tests' stamp: 'a 12/1/2019 14:45:28'!
 ManualClock class
 	instanceVariableNames: ''!
 
@@ -814,7 +845,7 @@ now: aTime
 	^self new initializeNow: aTime ! !
 
 
-!classDefinition: #StoreTestObjectsFactory category: #'TusLibros-Tests' stamp: 'a 11/30/2019 17:22:33'!
+!classDefinition: #StoreTestObjectsFactory category: #'TusLibros-Tests' stamp: 'a 12/1/2019 14:45:28'!
 Object subclass: #StoreTestObjectsFactory
 	instanceVariableNames: 'today'
 	classVariableNames: ''

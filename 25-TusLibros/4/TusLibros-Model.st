@@ -1,4 +1,4 @@
-!classDefinition: #Cart category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: #Cart category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Object subclass: #Cart
 	instanceVariableNames: 'catalog items'
 	classVariableNames: ''
@@ -117,7 +117,7 @@ delete: anAmount of: anItemToDelete
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cart class' category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: 'Cart class' category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Cart class
 	instanceVariableNames: ''!
 
@@ -137,9 +137,9 @@ invalidQuantityErrorMessage
 	^ 'Not enough quantity of item in cart'! !
 
 
-!classDefinition: #CartSession category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: #CartSession category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Object subclass: #CartSession
-	instanceVariableNames: 'owner cart lastUsedTime systemFacade'
+	instanceVariableNames: 'owner cart lastUsedTime systemFacade checkedOut'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros-Model'!
@@ -176,14 +176,20 @@ do: aBlock
 	^ [ aBlock value: self ] ensure: [ lastUsedTime := now  ]! !
 
 
-!CartSession methodsFor: 'initialization' stamp: 'HernanWilkinson 6/17/2015 20:36'!
+!CartSession methodsFor: 'initialization' stamp: 'a 11/30/2019 19:50:02'!
 initializeOwnedBy: aCustomer with: aCart on: aSystemFacade
 
 	owner := aCustomer.
 	cart := aCart.
 	systemFacade := aSystemFacade.
-	lastUsedTime := self now.! !
+	lastUsedTime := self now.
+	checkedOut := false.! !
 
+
+!CartSession methodsFor: 'error signal' stamp: 'a 11/30/2019 19:52:07'!
+assertCartNotCheckedOut
+
+	checkedOut ifTrue: [ self error: systemFacade cartAlreadyCheckedout ]! !
 
 !CartSession methodsFor: 'error signal' stamp: 'HernanWilkinson 6/17/2015 20:37'!
 signalCartSessionExpired
@@ -196,21 +202,25 @@ addToCart: anAmount of: aBook
 
 	^cart add: anAmount of: aBook! !
 
-!CartSession methodsFor: 'cart' stamp: 'HernanWilkinson 6/17/2015 20:35'!
+!CartSession methodsFor: 'cart' stamp: 'a 11/30/2019 17:55:59'!
 cartContent
 
-	^cart content! !
+	^cart list! !
 
-!CartSession methodsFor: 'cart' stamp: 'HernanWilkinson 6/17/2015 20:35'!
+!CartSession methodsFor: 'cart' stamp: 'a 11/30/2019 20:32:47'!
 checkOutCartWithCreditCardNumbered: aCreditCartNumber ownedBy: anOwner expiringOn: anExpirationMonthOfYear
 
-	^(Cashier
+	| ticket |
+	self assertCartNotCheckedOut.
+	ticket := (Cashier
 		toCheckout: cart
 		ownedBy: owner
 		charging: (CreditCard expiringOn: anExpirationMonthOfYear)
 		throught: systemFacade merchantProcessor
 		on: self today
-		registeringOn: systemFacade salesBook) checkOut ! !
+		registeringOn: systemFacade salesBook) checkOut.
+	checkedOut := true.
+	^ ticket! !
 
 !CartSession methodsFor: 'cart' stamp: 'a 11/30/2019 17:11:33'!
 deleteFromCart: anAmount of: anItem 
@@ -218,7 +228,7 @@ deleteFromCart: anAmount of: anItem
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CartSession class' category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: 'CartSession class' category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 CartSession class
 	instanceVariableNames: ''!
 
@@ -228,7 +238,7 @@ ownedBy: aCustomer with: aCart on: aSystemFacade
 	^self new initializeOwnedBy: aCustomer with: aCart on: aSystemFacade! !
 
 
-!classDefinition: #Cashier category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: #Cashier category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Object subclass: #Cashier
 	instanceVariableNames: 'cart salesBook merchantProcessor creditCard owner ticket'
 	classVariableNames: ''
@@ -240,7 +250,7 @@ createLineItemOf: anItem quantity: aQuantity
 
 	^LineItem of: anItem quantity: aQuantity total: (self totalOf: anItem quantity: aQuantity) ! !
 
-!Cashier methodsFor: 'checkout - private' stamp: 'HernanWilkinson 6/22/2013 12:25'!
+!Cashier methodsFor: 'checkout - private' stamp: 'a 11/30/2019 19:53:20'!
 createSale
 
 	^ Sale doneBy: owner certifiedWith: ticket
@@ -304,7 +314,7 @@ initializeToCheckout: aCart ownedBy: anOwner charging: aCreditCard throught: aMe
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Cashier class' category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: 'Cashier class' category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Cashier class
 	instanceVariableNames: ''!
 
@@ -319,12 +329,12 @@ assertIsNotExpired: aCreditCard on: aDate
 	(aCreditCard isExpiredOn: aDate) ifTrue: [self signalCanNotChargeAnExpiredCreditCard]! !
 
 
-!Cashier class methodsFor: 'instance creation' stamp: 'HernanWilkinson 6/17/2013 18:51'!
+!Cashier class methodsFor: 'instance creation' stamp: 'a 11/30/2019 18:47:15'!
 toCheckout: aCart charging: aCreditCard throught: aMerchantProcessor on: aDate registeringOn: aSalesBook
 	
 	self assertIsNotEmpty: aCart.
 	self assertIsNotExpired: aCreditCard on: aDate.
-	
+	self halt.
 	^self new initializeToCheckout: aCart charging: aCreditCard throught: aMerchantProcessor registeringOn: aSalesBook! !
 
 !Cashier class methodsFor: 'instance creation' stamp: 'HernanWilkinson 6/22/2013 12:00'!
@@ -363,7 +373,7 @@ signalCartCanNotBeEmpty
 	self error: self cartCanNotBeEmptyErrorMessage! !
 
 
-!classDefinition: #Clock category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: #Clock category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Object subclass: #Clock
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -381,7 +391,7 @@ today
 	self subclassResponsibility ! !
 
 
-!classDefinition: #CreditCard category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: #CreditCard category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Object subclass: #CreditCard
 	instanceVariableNames: 'expiration'
 	classVariableNames: ''
@@ -401,7 +411,7 @@ initializeExpiringOn: aMonth
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'CreditCard class' category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: 'CreditCard class' category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 CreditCard class
 	instanceVariableNames: ''!
 
@@ -411,7 +421,7 @@ expiringOn: aMonth
 	^self new initializeExpiringOn: aMonth! !
 
 
-!classDefinition: #LineItem category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: #LineItem category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Object subclass: #LineItem
 	instanceVariableNames: 'item quantity total'
 	classVariableNames: ''
@@ -429,6 +439,10 @@ total
 	^ total! !
 
 
+!LineItem methodsFor: 'initialization' stamp: 'a 12/1/2019 12:44:52'!
+asJson
+	 ^ '{ "bookIsbn": "', item asString, '" , "quantity": ', quantity asString, '}'! !
+
 !LineItem methodsFor: 'initialization' stamp: 'HernanWilkinson 6/22/2013 12:18'!
 initializeOf: anItem quantity: aQuantity total: aTotal
 
@@ -440,7 +454,7 @@ initializeOf: anItem quantity: aQuantity total: aTotal
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'LineItem class' category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: 'LineItem class' category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 LineItem class
 	instanceVariableNames: ''!
 
@@ -452,7 +466,7 @@ of: anItem quantity: aQuantity total: aTotal
 ! !
 
 
-!classDefinition: #MerchantProcessor category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: #MerchantProcessor category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Object subclass: #MerchantProcessor
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -470,7 +484,7 @@ debit: anAmount from: aCreditCard
 	self subclassResponsibility ! !
 
 
-!classDefinition: #Sale category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: #Sale category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Object subclass: #Sale
 	instanceVariableNames: 'customer ticket'
 	classVariableNames: ''
@@ -483,11 +497,11 @@ wasDoneBy: aCustomer
 	^customer = aCustomer ! !
 
 
-!Sale methodsFor: 'initialization' stamp: 'HernanWilkinson 6/22/2013 12:26'!
+!Sale methodsFor: 'initialization' stamp: 'a 11/30/2019 19:52:54'!
 initializeDoneBy: aCustomer certifiedWith: aTicket
 
 	customer := aCustomer.
-	ticket := aTicket ! !
+	ticket := aTicket.! !
 
 
 !Sale methodsFor: 'total' stamp: 'HernanWilkinson 6/22/2013 12:26'!
@@ -503,22 +517,31 @@ lineItemsDo: aBlock
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Sale class' category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: 'Sale class' category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Sale class
 	instanceVariableNames: ''!
 
-!Sale class methodsFor: 'instance creation' stamp: 'HernanWilkinson 6/22/2013 12:25'!
+!Sale class methodsFor: 'instance creation' stamp: 'a 11/30/2019 19:53:09'!
 doneBy: aCustomer certifiedWith: aTicket
 
-	^self new initializeDoneBy: aCustomer certifiedWith: aTicket ! !
+	^self new initializeDoneBy: aCustomer certifiedWith: aTicket! !
 
 
-!classDefinition: #Ticket category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: #Ticket category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Object subclass: #Ticket
 	instanceVariableNames: 'lineItems'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros-Model'!
+
+!Ticket methodsFor: 'total' stamp: 'a 12/1/2019 13:18:32'!
+asJson
+	| serialization |
+	
+	serialization := ''.
+	self lineItemsDo: [ :aLineItem | serialization := serialization , (aLineItem asJson), ',' ].
+	
+	^ '[', (serialization copyFrom: 1 to: (serialization size - 1)), ']'! !
 
 !Ticket methodsFor: 'total' stamp: 'HernanWilkinson 6/17/2015 20:39'!
 total
@@ -539,7 +562,7 @@ lineItemsDo: aBlock
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'Ticket class' category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: 'Ticket class' category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Ticket class
 	instanceVariableNames: ''!
 
@@ -549,7 +572,7 @@ of: aCollectionOfLineItems
 	^self new initializeOf: aCollectionOfLineItems ! !
 
 
-!classDefinition: #TusLibrosSystemFacade category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: #TusLibrosSystemFacade category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 Object subclass: #TusLibrosSystemFacade
 	instanceVariableNames: 'validUsersAndPasswords catalog lastId merchantProcessor salesBook clock cartSessions'
 	classVariableNames: ''
@@ -560,6 +583,10 @@ Object subclass: #TusLibrosSystemFacade
 canNotChargeAnExpiredCreditCardErrorMessage
 
 	^Cashier canNotChargeAnExpiredCreditCardErrorMessage ! !
+
+!TusLibrosSystemFacade methodsFor: 'error messages' stamp: 'a 11/30/2019 19:35:20'!
+cartAlreadyCheckedout
+	^ 'Cannot checkout allready checked out cart'! !
 
 !TusLibrosSystemFacade methodsFor: 'error messages' stamp: 'HernanWilkinson 6/22/2013 11:17'!
 cartCanNotBeEmptyErrorMessage
@@ -662,12 +689,12 @@ add: anAmount of: aBook toCartIdentifiedAs: aCartId
 
 	self withCartSessionIdentifiedAs: aCartId do: [ :cartSession | cartSession addToCart: anAmount of: aBook ]! !
 
-!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'HernanWilkinson 6/17/2015 20:47'!
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'a 11/30/2019 20:33:21'!
 checkOutCartIdentifiedAs: aCartId withCreditCardNumbered: aCreditCartNumber ownedBy: anOwner expiringOn: anExpirationMonthOfYear
-
+	
 	self
 		withCartSessionIdentifiedAs: aCartId
-		do: [ :cartSession | cartSession
+		do: [ :cartSession | ^ cartSession
 			checkOutCartWithCreditCardNumbered: aCreditCartNumber
 			ownedBy: anOwner
 			expiringOn: anExpirationMonthOfYear ]
@@ -688,9 +715,9 @@ createCartFor: aUser authenticatedWith: aPassword
 delete: anAmount of: aBook fromCartIdentifiedAs: aCartId 
 	self withCartSessionIdentifiedAs: aCartId do: [ :cartSession | cartSession deleteFromCart: anAmount of: aBook ]! !
 
-!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'HernanWilkinson 6/17/2015 20:48'!
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'a 12/1/2019 13:40:09'!
 listCartIdentifiedAs: aCartId
-
+	
 	^ self withCartSessionIdentifiedAs: aCartId do: [ :cartSession | cartSession cartContent ]! !
 
 !TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'HAW 11/26/2018 20:33:49'!
@@ -703,6 +730,11 @@ listPurchasesOf: aUser authenticatingWith: aPassword
 			into: [ :salesOrderedByBook :aSale |
 				self list: aSale on: salesOrderedByBook.
 				salesOrderedByBook ] ]! !
+
+!TusLibrosSystemFacade methodsFor: 'facade protocol' stamp: 'a 12/1/2019 14:40:33'!
+priceOf: anItem
+
+	^ catalog at: anItem! !
 
 
 !TusLibrosSystemFacade methodsFor: 'checkout support' stamp: 'HernanWilkinson 6/17/2015 20:49'!
@@ -750,7 +782,7 @@ initializeAuthenticatingWith: aValidUsersAndPasswords
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TusLibrosSystemFacade class' category: #'TusLibros-Model' stamp: 'a 11/30/2019 17:22:38'!
+!classDefinition: 'TusLibrosSystemFacade class' category: #'TusLibros-Model' stamp: 'a 12/1/2019 14:45:32'!
 TusLibrosSystemFacade class
 	instanceVariableNames: ''!
 
