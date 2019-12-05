@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.item {
+    display: flex;
+    padding: 30px 15px 0;
+    width: 300px;
+}
+
+.form {
+    margin-top: 30px;
+    margin-left: auto;
+}
+
+.quantity {
+    width: 50px;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    padding: 20px;
+}
